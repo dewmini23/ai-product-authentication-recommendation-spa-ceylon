@@ -1,0 +1,331 @@
+@import '../../../../styles/theme';
+
+.navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(6, 20, 18, 0.95); // Keep existing dark luxury background
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201, 166, 70, 0.3); // Subtle gold border
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+    // LEVEL 1: TOP UTILITY BAR
+    .navbar-top {
+        border-bottom: none; // Removed line as requested
+        height: 110px; // Increased height significantly for bigger logo
+        display: flex;
+        align-items: center;
+
+        .top-row-wrapper {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; // Perfectly centered logo
+            align-items: center;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+
+            .left-section {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+            .center-section {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .right-section {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 1.5rem;
+            }
+        }
+
+        .navbar-brand {
+            .brand-logo {
+                height: 90px; // Increased from 60px to 90px
+                width: auto;
+                object-fit: contain;
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                color: $color-accent-gold;
+            }
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+
+            &.active {
+                .search-input {
+                    width: 200px;
+                    opacity: 1;
+                    padding: 0.5rem 1rem;
+                }
+            }
+
+            .search-input {
+                width: 0;
+                opacity: 0;
+                transition: all 0.3s ease;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 20px;
+                color: #fff;
+                font-family: 'Poppins', sans-serif;
+                font-size: 0.85rem;
+                outline: none;
+
+                &:focus {
+                    border-color: $color-accent-gold;
+                    background: rgba(0, 0, 0, 0.5);
+                }
+
+                @media (max-width: 576px) {
+                    position: absolute;
+                    left: 0;
+                    top: 120%;
+                    width: 200px !important;
+                    background: #000;
+                    z-index: 10;
+                }
+            }
+        }
+
+        .mobile-toggle {
+            display: none;
+
+            @media (max-width: 992px) {
+                display: block;
+            }
+        }
+    }
+
+    // LEVEL 2: MAIN NAVIGATION BAR
+    .navbar-bottom {
+        background-color: rgba(6, 20, 18, 0.2);
+
+        .nav-menu-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 45px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5rem 0 1rem; // Reduced right padding to shift center slightly right
+            gap: 1.2rem; // Compact gap
+            flex-wrap: nowrap; // FORCE single line
+            // REMOVE overflow-x: auto; to prevent clipping dropdowns
+            position: relative; // Establish context
+
+            @media (max-width: 1300px) {
+                gap: 0.8rem; // Tighter on laptops
+            }
+        }
+
+        // Shared Link Styles
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important; // Force default color consistency
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem; // Compact luxury font size
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            position: relative;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: color 0.3s ease;
+            padding: 8px 0;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 2px;
+                left: 0;
+                width: 0;
+                height: 1px;
+                background-color: $color-accent-gold;
+                transition: width 0.3s ease;
+            }
+
+            &:hover,
+            &.active-link {
+                color: $color-accent-gold !important; // Consistent active/hover color
+
+                &::after {
+                    width: 100%;
+                }
+            }
+
+            &.highlight-item {
+                // Remove different color override to keep consistency, just use icon
+                font-weight: 600;
+
+                .highlight-icon {
+                    font-size: 0.85em;
+                    margin-left: 4px;
+                    color: lighten($color-accent-gold, 15%); // Icon can be brighter
+                    animation: sparkle 2s infinite ease-in-out;
+                }
+            }
+        }
+
+        // Desktop Dropdown
+        .nav-item.dropdown {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+
+            .dropdown-content {
+                display: none;
+            }
+
+            .dropdown-icon {
+                font-size: 0.7em;
+                margin-left: 4px;
+                transition: transform 0.2s;
+            }
+
+            &:hover .dropdown-icon {
+                transform: rotate(180deg);
+            }
+
+            @media (min-width: 993px) {
+                &:hover .dropdown-content {
+                    display: block;
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: #fff; // Clean white background
+                    min-width: 240px;
+                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); // Stronger shadow
+                    border-top: 3px solid $color-accent-gold;
+                    padding: 1rem 0;
+                    z-index: 1002; // Ensure high z-index
+                    border-radius: 0 0 4px 4px;
+
+                    .dropdown-link {
+                        display: block;
+                        padding: 0.8rem 1.5rem;
+                        color: #1a1a1a !important; // High contrast dark text
+                        text-decoration: none;
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 0.9rem;
+                        white-space: nowrap;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            background-color: rgba(201, 166, 70, 0.15);
+                            color: darken($color-accent-gold, 20%) !important;
+                            padding-left: 1.8rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        // MOBILE VIEW (Collapse logic)
+        @media (max-width: 992px) {
+            display: none;
+            position: absolute;
+            top: 80px; // matches top bar height
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background-color: #061412; // deep green match
+            overflow-y: auto;
+
+            &.active {
+                display: block;
+            }
+
+            .nav-menu-container {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 1rem 0;
+                gap: 0;
+
+                .nav-link,
+                .nav-item {
+                    width: 100%;
+                    padding: 1rem 2rem;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                }
+
+                .nav-item.dropdown {
+                    display: block;
+                    padding: 0;
+
+                    .nav-link {
+                        display: flex;
+                        justify-content: space-between;
+                        border: none;
+                    }
+
+                    .dropdown-content {
+                        display: none;
+                        background: rgba(0, 0, 0, 0.2);
+
+                        .dropdown-link {
+                            display: block;
+                            padding: 0.8rem 3rem;
+                            color: rgba(255, 255, 255, 0.7);
+                            text-decoration: none;
+                            border-top: 1px solid rgba(255, 255, 255, 0.05);
+                        }
+                    }
+
+                    &.mobile-open {
+                        .dropdown-content {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(0.9);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}

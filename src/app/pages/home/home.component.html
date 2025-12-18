@@ -1,0 +1,126 @@
+<app-navbar></app-navbar>
+
+<main class="home-container">
+
+    <!-- 1. HERO SECTION -->
+    <section class="hero-section">
+        <div class="page-container hero-layout">
+            <div class="hero-content">
+                <h1>Authenticate. Trust. Discover.</h1>
+                <p>Verify product authenticity and receive personalized recommendations powered by AI.</p>
+                <p class="hero-micro-text">Detect packaging inconsistencies & counterfeits in seconds.</p>
+                <div class="cta-group">
+                    <button class="btn-gold" (click)="navigateToAuthenticate()">Authenticate a Product</button>
+                    <button class="btn-outline" (click)="navigateToRecommendations()">Get Recommendations</button>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="auth-card-preview floating-animation">
+                    <div class="preview-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <div class="preview-body">
+                        <div class="mock-product-img"></div>
+                        <div class="status-bar">
+                            <span>Authenticity</span>
+                            <div class="progress">
+                                <div class="fill" style="width: 92%"></div>
+                            </div>
+                            <span class="score">Verified 92%</span>
+                        </div>
+                        <ul class="suggestions">
+                            <li>✨ Fits your Skin Type</li>
+                            <li>🌿 100% Natural Origin</li>
+                            <li>💧 High Hydration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-container">
+
+        <!-- 2. FEATURED ACTION CARDS -->
+        <section class="features-section">
+            <div class="feature-card" (click)="navigateToAuthenticate()">
+                <div class="icon-circle">🔍</div>
+                <h3>Product Authentication</h3>
+                <p>Scan barcode or upload image to verify authenticity instantly.</p>
+                <ul>
+                    <li>✓ Barcode / QR Support</li>
+                    <li>✓ Image-based Verification</li>
+                    <li>✓ Reliability Score</li>
+                </ul>
+                <button class="link-btn">Start Authentication →</button>
+            </div>
+
+            <div class="feature-card" (click)="navigateToRecommendations()">
+                <div class="icon-circle">✨</div>
+                <h3>Personalized Recommendations</h3>
+                <p>AI-curated experts selection based on your unique skin profile.</p>
+                <ul>
+                    <li>✓ Skin Profile Matching</li>
+                    <li>✓ Routine Suggestions</li>
+                    <li>✓ Similar Discovery</li>
+                </ul>
+                <button class="link-btn">View Recommendations →</button>
+            </div>
+        </section>
+
+        <!-- 3. TRENDING CAROUSEL -->
+        <app-product-carousel title="Trending Now" [products]="allProducts" [filters]="filters" viewAllRoute="/shop"
+            (quickView)="openQuickView($event)" (addToCart)="addToCart($event)" class="trending-section">
+        </app-product-carousel>
+
+        <!-- 4. NEW ARRIVALS CAROUSEL -->
+        <app-product-carousel title="New Arrivals" [products]="newArrivalsProducts" [filters]="filters"
+            viewAllRoute="/new-arrivals" (quickView)="openQuickView($event)" (addToCart)="addToCart($event)"
+            class="trending-section">
+        </app-product-carousel>
+
+        <!-- 5. SHOP BY CATEGORY (MASONRY) -->
+        <app-category-masonry></app-category-masonry>
+
+        <!-- 6. AWARD WINNERS CAROUSEL -->
+        <app-product-carousel title="Award Winners" [products]="awardWinnerProducts" [filters]="[]"
+            viewAllRoute="/award-winners" (quickView)="openQuickView($event)" (addToCart)="addToCart($event)"
+            class="trending-section">
+        </app-product-carousel>
+
+        <!-- 7. CUSTOMER REVIEWS -->
+        <app-reviews-section></app-reviews-section>
+
+        <!-- 8. FAQ SECTION -->
+        <app-faq-section></app-faq-section>
+
+        <!-- 9. TRUST STRIP -->
+        <section class="trust-strip">
+            <div class="trust-item">
+                <span class="icon">🛡️</span>
+                <span>AI-Assisted Verification</span>
+            </div>
+            <div class="trust-item">
+                <span class="icon">🔒</span>
+                <span>Secure & Private</span>
+            </div>
+            <div class="trust-item">
+                <span class="icon">📊</span>
+                <span>Real-time Scoring</span>
+            </div>
+        </section>
+
+    </div>
+
+
+    <!-- 4. QUICK VIEW MODAL -->
+    <app-quick-view-modal *ngIf="showQuickView" [product]="selectedProduct" (closeEvent)="closeQuickView()"
+        (addToCart)="addToCart($event)" (authenticate)="navigateToAuthenticate($event)">
+    </app-quick-view-modal>
+
+</main>
+
+<app-footer></app-footer>

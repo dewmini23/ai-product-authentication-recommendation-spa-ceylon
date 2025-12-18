@@ -1,0 +1,412 @@
+@import '../../../../styles/theme';
+
+// Login Container - Transparent to let body background show through
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    width: 100%;
+}
+
+.login-card {
+    background: rgba(6, 20, 18, 0.85); // Dark, transparent
+    backdrop-filter: blur(16px); // Stronger glass effect
+    border: 1px solid rgba(201, 166, 70, 0.8); // Gold border
+
+    // Refined Dimensions: Wider, shorter vertical profile
+    border-radius: 20px;
+    max-width: 460px; // Comfortable width
+    width: 100%;
+    max-height: 100vh; // Ensure it never exceeds viewport
+    overflow-y: auto; // Allow scroll internally if absolutely necessary
+    scrollbar-width: none; // Hide scrollbar for cleaner look
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // Hide scrollbar for WebKit
+
+    padding: 1.5rem 2rem;
+
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); // Elegant shadow
+    color: $color-text-light;
+    position: relative;
+
+    /* No animations or transitions allowed */
+
+    // 1. BRAND HEADER
+    .brand-header {
+        text-align: center;
+        margin-bottom: 1rem;
+
+        .brand-logo {
+            display: block;
+            margin: 0 auto 0.75rem auto; // Centered with bottom spacing
+            height: 60px; // Larger, more prominent
+            width: auto;
+            object-fit: contain;
+            // Initial shadow
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+
+            // Gentle Golden Glow Animation
+            animation: logoGlow 4s ease-in-out infinite alternate;
+
+            // Hover effect: Slightly brighter glow
+            &:hover {
+                filter: drop-shadow(0 0 15px rgba(201, 166, 70, 0.8));
+                transition: filter 0.5s ease;
+            }
+        }
+
+        @keyframes logoGlow {
+            0% {
+                filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 12px rgba(201, 166, 70, 0.5));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 18px rgba(255, 223, 128, 0.7)); // Brighter gold
+            }
+        }
+
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            color: $color-accent-gold;
+            font-size: 0.85rem;
+            margin: 0;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+    }
+
+    // 2. LOGIN HEADER
+    .login-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin: 0 0 0.25rem;
+            color: #F5F0E8; // Off-white
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: rgba(245, 240, 232, 0.7); // Muted off-white
+            font-family: 'Poppins', sans-serif;
+        }
+    }
+
+    // 3. FORM INPUTS & BUTTONS - PERFECT ALIGNMENT
+    .form-group {
+        margin-bottom: 0.85rem;
+        width: 100%; // Ensure container is full width
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
+            color: $color-text-light;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-control {
+            display: block; // Block level for full width
+            width: 100%;
+            height: 38px; // Standardized Height
+            padding: 0 0.85rem; // Consistent Padding
+            font-size: 0.9rem;
+            line-height: 1.5;
+
+            // Box Sizing is critical for alignment
+            box-sizing: border-box;
+
+            border-radius: 12px; // Consistent Radius
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+
+            &:focus {
+                outline: none;
+                border-color: $color-accent-gold;
+                background: rgba(255, 255, 255, 0.1);
+                box-shadow: 0 0 0 4px rgba(201, 166, 70, 0.15);
+            }
+
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.3);
+            }
+
+            &.is-invalid {
+                border-color: $color-error;
+            }
+        }
+
+        .invalid-feedback {
+            color: #ff8a80;
+            font-size: 0.8rem;
+            margin-top: 0.4rem;
+        }
+    }
+
+    .alert-danger {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 1rem;
+        background: rgba(220, 53, 69, 0.15);
+        border: 1px solid rgba(220, 53, 69, 0.3);
+        border-radius: 12px;
+        color: #ffb4b4;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .form-actions {
+        margin-top: 1.5rem;
+        width: 100%; // Ensure actions container is full width
+    }
+
+    // COMMON BUTTON STYLES
+    .btn {
+        display: flex; // Flex for perfect centering
+        align-items: center;
+        justify-content: center;
+        width: 100%; // Force full width
+        height: 38px; // Matches Input Height Exactly
+        padding: 0 0.85rem; // Matches Input Padding
+        border-radius: 12px; // Matches Input Radius Exactly
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+        border: none;
+
+        // Critical: Box Sizing
+        box-sizing: border-box;
+
+        &:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    }
+
+    // SIGN IN BUTTON
+    .btn-primary {
+        background: linear-gradient(135deg, $color-accent-purple 0%, darken($color-accent-purple, 10%) 100%);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+        &:hover:not(:disabled) {
+            background: linear-gradient(135deg, lighten($color-accent-purple, 5%) 0%, $color-accent-purple 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-color: $color-accent-gold;
+        }
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 1.5rem 0;
+        width: 100%;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.85rem;
+
+        &::before,
+        &::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        span {
+            padding: 0 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    }
+
+    // GOOGLE BUTTON
+    .social-login {
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+
+    .google-button {
+        @extend .btn; // Inherit base button properties
+        background-color: #ffffff;
+        color: #333333;
+        border: 1px solid #e0e0e0;
+
+        // Ensure flex behavior for icon + text
+        flex-direction: row;
+        gap: 12px;
+
+        .google-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            // No margin right here because of gap
+        }
+
+        &:hover {
+            background-color: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    // AUTH LINKS
+    .auth-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.9rem;
+
+        a {
+            color: $color-accent-gold;
+            font-weight: 500;
+
+            &:hover {
+                color: #fff;
+                text-decoration: underline;
+            }
+        }
+
+        .register-prompt {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+
+    // Mobile Responsiveness
+    @media (max-width: 576px) {
+        .login-card {
+            padding: 2rem 1.5rem;
+            max-width: 90%;
+        }
+
+        .brand-header .brand-logo {
+            height: 50px;
+        }
+    }
+
+    // Height Responsiveness
+    @media (max-height: 900px) {
+        .brand-header {
+            margin-bottom: 1rem;
+
+            .brand-logo {
+                height: 70px;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .login-header {
+            margin-bottom: 1rem;
+
+            h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+
+            .form-control {
+                height: 45px;
+            }
+        }
+
+        .btn {
+            height: 45px;
+        }
+
+        .social-login {
+            margin-bottom: 1rem;
+        }
+    }
+
+    @media (max-height: 700px) {
+        padding: 1.5rem 2rem;
+
+        .brand-header {
+            margin-bottom: 0.5rem;
+
+            .brand-logo {
+                height: 50px;
+                margin-bottom: 0.5rem;
+            }
+
+            .tagline {
+                font-size: 0.8rem;
+            }
+        }
+
+        .login-header {
+            margin-bottom: 0.75rem;
+
+            h3 {
+                font-size: 1.25rem;
+            }
+
+            .subtitle {
+                font-size: 0.8rem;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+
+            label {
+                font-size: 0.75rem;
+                margin-bottom: 0.25rem;
+            }
+
+            .form-control {
+                height: 40px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .form-actions {
+            margin-top: 1rem;
+        }
+
+        .btn {
+            height: 40px;
+            font-size: 0.9rem;
+        }
+
+        .divider {
+            margin: 1rem 0;
+        }
+
+        .social-login {
+            margin-bottom: 1rem;
+        }
+
+        .auth-links {
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+    }
+}

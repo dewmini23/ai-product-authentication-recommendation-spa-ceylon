@@ -1,0 +1,69 @@
+<div class="login-container">
+    <div class="login-card">
+        <div class="brand-header">
+            <!-- Fixed Logo Path -->
+            <img src="assets/spa-ceylon-logo.png" alt="Spa Ceylon" class="brand-logo">
+
+            <!-- Subtitle -->
+            <h2 class="tagline">AI-Powered Product Authenticity & Recommendations</h2>
+        </div>
+
+        <div class="login-header">
+            <h3>Secure Sign In</h3>
+            <p class="subtitle">Welcome back to your sanctuary</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" formControlName="email" class="form-control"
+                    placeholder="Enter your email" [class.is-invalid]="f['email'].touched && f['email'].invalid">
+                <div *ngIf="f['email'].touched && f['email'].errors" class="invalid-feedback">
+                    <div *ngIf="f['email'].errors['required']">Email is required</div>
+                    <div *ngIf="f['email'].errors['email']">Please enter a valid email</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" formControlName="password" class="form-control"
+                    placeholder="Enter your password"
+                    [class.is-invalid]="f['password'].touched && f['password'].invalid">
+                <div *ngIf="f['password'].touched && f['password'].errors" class="invalid-feedback">
+                    <div *ngIf="f['password'].errors['required']">Password is required</div>
+                    <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+                </div>
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block" [disabled]="loginForm.invalid || isLoading">
+                    <span *ngIf="isLoading">Signing In...</span>
+                    <span *ngIf="!isLoading">Sign In</span>
+                </button>
+            </div>
+        </form>
+
+        <div class="divider">
+            <span>Or</span>
+        </div>
+
+        <div class="social-login">
+            <!-- Google Button with SVG Icon -->
+            <button type="button" class="btn btn-google btn-block google-button" (click)="onGoogleLogin()">
+                <img src="assets/google-g.svg" alt="Google" class="google-icon">
+                <span>Continue with Google</span>
+            </button>
+        </div>
+
+        <div class="auth-links">
+            <a routerLink="/forgot-password" class="forgot-password">Forgot password?</a>
+            <span class="register-prompt">Don't have an account? <a routerLink="/signup">Sign up</a></span>
+        </div>
+
+    </div>
+</div>

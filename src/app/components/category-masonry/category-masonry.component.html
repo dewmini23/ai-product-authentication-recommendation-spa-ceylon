@@ -1,0 +1,62 @@
+<section class="masonry-section">
+    <div class="section-header">
+        <h2>Shop Our Best Selling Categories</h2>
+        <p class="subtitle">Curated collections for your complete wellness journey</p>
+    </div>
+
+    <div class="masonry-grid">
+        <div class="category-tile" *ngFor="let cat of categories" [class]="'tile-' + cat.slug"
+            (click)="navigateToCategory(cat.slug)" tabindex="0">
+
+            <!-- 1. Background Layers -->
+            <div class="tile-bg">
+                <div class="noise-overlay"></div>
+                <div class="vignette-overlay"></div>
+                <div class="shine-sweep"></div>
+
+                <!-- Hero Abstract Element (Top Right) -->
+                <div class="hero-element" [ngSwitch]="cat.slug">
+                    <!-- Skin: Abstract Leaf -->
+                    <svg *ngSwitchCase="'skin'" viewBox="0 0 100 100" class="abstract-svg">
+                        <path d="M50 0 C20 0 0 20 0 50 C0 80 50 100 50 100 C50 100 100 80 100 50 C100 20 80 0 50 0 Z"
+                            fill="currentColor" opacity="0.1" />
+                    </svg>
+                    <!-- Fragrance: Swirl -->
+                    <svg *ngSwitchCase="'fragrances'" viewBox="0 0 100 100" class="abstract-svg">
+                        <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2" fill="none"
+                            opacity="0.1" />
+                        <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="2" fill="none"
+                            opacity="0.1" />
+                    </svg>
+                    <!-- Mind Body: Lotus Petal -->
+                    <svg *ngSwitchCase="'mind-body'" viewBox="0 0 100 100" class="abstract-svg">
+                        <path d="M50 10 Q80 40 80 60 Q80 90 50 90 Q20 90 20 60 Q20 40 50 10 Z" fill="currentColor"
+                            opacity="0.1" />
+                    </svg>
+                    <!-- Hair: Strand Wave -->
+                    <svg *ngSwitchCase="'hair'" viewBox="0 0 100 100" class="abstract-svg">
+                        <path d="M10 10 Q50 50 90 10 Q50 50 10 90" stroke="currentColor" stroke-width="5" fill="none"
+                            opacity="0.1" />
+                    </svg>
+                    <!-- Home: Soft Circle/Light -->
+                    <svg *ngSwitchCase="'home'" viewBox="0 0 100 100" class="abstract-svg">
+                        <circle cx="50" cy="50" r="45" fill="url(#grad1)" opacity="0.1" />
+                        <defs>
+                            <radialGradient id="grad1">
+                                <stop offset="0%" stop-color="currentColor" />
+                                <stop offset="100%" stop-color="transparent" />
+                            </radialGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 2. Content Layer -->
+            <div class="tile-content">
+                <div class="centered-title">
+                    <h3>{{ cat.name }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

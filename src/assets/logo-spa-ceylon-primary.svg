@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150">
+  <defs>
+    <style>
+      .gold-text { fill: #C9A646; font-family: 'Playfair Display', serif; }
+      .gold-icon { fill: #C9A646; }
+    </style>
+  </defs>
+  
+  <!-- Lotus Icon -->
+  <path class="gold-icon" d="M200,10 C200,10 230,40 230,70 C230,90 215,100 200,100 C185,100 170,90 170,70 C170,40 200,10 200,10 Z M200,10 C200,10 240,50 240,80 C240,95 230,105 200,105 C170,105 160,95 160,80 C160,50 200,10 200,10 Z" opacity="0.9"/>
+  <path class="gold-icon" d="M200,105 C200,105 260,80 260,60 C260,40 240,40 210,80 M200,105 C200,105 140,80 140,60 C140,40 160,40 190,80" fill="none" stroke="#C9A646" stroke-width="2"/>
+
+  <!-- Text -->
+  <text x="200" y="130" text-anchor="middle" font-size="28" font-weight="bold" letter-spacing="4" class="gold-text">SPA CEYLON</text>
+  <text x="200" y="145" text-anchor="middle" font-size="10" letter-spacing="3" class="gold-text">AYURVEDA</text>
+</svg>

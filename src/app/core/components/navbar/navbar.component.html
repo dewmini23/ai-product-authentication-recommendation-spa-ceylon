@@ -1,0 +1,98 @@
+<nav class="navbar">
+    <!-- ROW 1: TOP UTILITY ROW -->
+    <div class="navbar-top">
+        <div class="container top-row-wrapper">
+            <!-- Left: Search -->
+            <div class="left-section">
+                <div class="search-container" [class.active]="isSearchOpen">
+                    <input type="text" class="search-input" placeholder="Search..." *ngIf="isSearchOpen">
+                    <button class="icon-btn search-btn" aria-label="Search" (click)="toggleSearch()">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                    <!-- Mobile Menu Toggle (Left aligned on mobile for balance or keep Right?) 
+                         User asked for SEARCH on left of logo. 
+                         Let's keep Search left. Toggle usually goes right on mobile. -->
+                </div>
+            </div>
+
+            <!-- Center: Logo -->
+            <div class="center-section">
+                <a routerLink="/" class="navbar-brand">
+                    <img src="assets/spa-ceylon-logo.png" alt="Spa Ceylon" class="brand-logo">
+                </a>
+            </div>
+
+            <!-- Right: Icons -->
+            <div class="right-section">
+                <!-- User/Login -->
+                <a routerLink="/login" class="icon-btn" aria-label="Login">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </a>
+
+                <!-- Cart -->
+                <button class="icon-btn" aria-label="Cart">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                </button>
+
+                <!-- Mobile Toggle -->
+                <button class="mobile-toggle icon-btn" aria-label="Menu" (click)="toggleMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round" *ngIf="!isMenuOpen">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round" *ngIf="isMenuOpen">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROW 2: MAIN NAVIGATION ROW -->
+    <div class="navbar-bottom" [class.active]="isMenuOpen">
+        <div class="container nav-menu-container">
+            <ng-container *ngFor="let item of menuItems">
+
+                <!-- Regular Link -->
+                <a *ngIf="item.type === 'link'" [routerLink]="item.link" class="nav-link"
+                    [class.highlight-item]="item.highlight" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{exact: true}" (click)="isMenuOpen = false">
+                    {{item.label}}
+                    <i *ngIf="item.highlight" class="fas fa-sparkles highlight-icon"></i>
+                </a>
+
+                <!-- Dropdown Item -->
+                <div *ngIf="item.type === 'dropdown'" class="nav-item dropdown"
+                    [class.mobile-open]="activeMobileDropdown === item.label"
+                    (click)="toggleMobileDropdown(item.label)">
+                    <span class="nav-link cursor-pointer">
+                        {{item.label}} <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </span>
+                    <div class="dropdown-content">
+                        <a *ngFor="let subItem of item.children" class="dropdown-link">
+                            {{subItem}}
+                        </a>
+                    </div>
+                </div>
+
+            </ng-container>
+        </div>
+    </div>
+</nav>

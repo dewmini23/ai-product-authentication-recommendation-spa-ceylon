@@ -1,0 +1,32 @@
+<section class="min-h-section">
+    <div class="section-header">
+        <h2>{{ title }}</h2>
+
+        <div class="header-controls">
+            <div class="filters" *ngIf="filters && filters.length > 0">
+                <button *ngFor="let filter of filters" [class.active]="selectedFilter === filter"
+                    (click)="filterProducts(filter)">
+                    {{ filter }}
+                </button>
+            </div>
+
+            <div class="nav-controls">
+                <span class="pagination-indicator">{{ currentPage }} / {{ totalPages }}</span>
+                <button class="nav-arrow" (click)="scrollLeft()">←</button>
+                <button class="nav-arrow" (click)="scrollRight()">→</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="carousel-container-outer">
+        <div class="products-carousel" #carouselContainer (scroll)="onScroll()">
+            <app-product-card class="carousel-item" *ngFor="let product of filteredProducts" [product]="product"
+                (quickView)="onQuickView($event)" (addToCart)="onAddToCart($event)">
+            </app-product-card>
+        </div>
+    </div>
+
+    <div class="view-all-container" *ngIf="viewAllRoute">
+        <button class="btn-view-all" (click)="navigateToViewAll()">VIEW ALL</button>
+    </div>
+</section>

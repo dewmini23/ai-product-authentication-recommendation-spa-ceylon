@@ -1,0 +1,31 @@
+<section class="reviews-section">
+    <div class="page-container">
+        <div class="section-header">
+            <h2>Customer Reviews</h2>
+        </div>
+
+        <div class="reviews-grid">
+            <div class="review-card" *ngFor="let review of reviews" [ngClass]="review.bgVariant">
+                <div class="card-bg-overlay"></div>
+
+                <div class="card-content">
+                    <div class="stars">
+                        <span *ngFor="let star of [1,2,3,4,5]" class="star">★</span>
+                    </div>
+
+                    <blockquote class="quote">
+                        "{{ review.quote }}"
+                    </blockquote>
+
+                    <div class="author">
+                        — {{ review.name }}
+                    </div>
+
+                    <a [routerLink]="review.productRoute" class="cta-link">
+                        Explore Product <span class="arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

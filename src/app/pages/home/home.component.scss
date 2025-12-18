@@ -1,0 +1,447 @@
+/* Variables */
+$primary-gold: #C8A24A;
+$primary-gold-dim: #a8822e;
+$bg-dark: #06110E;
+$bg-card: rgba(255, 255, 255, 0.03);
+$text-light: #f4f4f4;
+$text-muted: #b0b0b0;
+
+:host {
+    display: block;
+    background-color: $bg-dark;
+    color: $text-light;
+    font-family: 'Poppins', sans-serif;
+    /* Fallback system font if not loaded */
+    min-height: 100vh;
+}
+
+.home-container {
+    width: 100%;
+}
+
+/* REUSABLE LAYOUT CONTAINER */
+.page-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+
+    @media (min-width: 768px) {
+        padding: 0 48px;
+    }
+}
+
+/* 1. HERO SECTION */
+.hero-section {
+    width: 100%;
+    /* Full width background */
+    background: radial-gradient(circle at 30% 20%, #0f2621 0%, $bg-dark 70%);
+    min-height: 80vh;
+    position: relative;
+    overflow: hidden;
+
+    /* Layout */
+    display: flex;
+    align-items: center;
+    /* Vertical center of content in the viewport height */
+    padding-top: 3.5rem;
+    /* Space for navbar */
+    padding-bottom: 6rem;
+
+    /* Subtle glow effect */
+    &::before {
+        content: '';
+        position: absolute;
+        top: -20%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(200, 162, 74, 0.08) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+}
+
+.hero-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+
+    @media (max-width: 900px) {
+        flex-direction: column;
+        text-align: center;
+        gap: 4rem;
+    }
+}
+
+.hero-content {
+    flex: 1;
+    /* Takes available space, sharing with visual */
+    max-width: 600px;
+    /* Constraints width to keep readable and align with grid columns roughly */
+    animation: fadeInSlideRight 1s ease-out;
+
+    h1 {
+        font-family: 'Playfair Display', serif;
+        /* Luxury Serif */
+        font-size: 3.5rem;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(to right, #fff 20%, $primary-gold 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        @media (max-width: 768px) {
+            font-size: 2.5rem;
+        }
+    }
+
+    p {
+        font-size: 1.2rem;
+        color: $text-muted;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+
+    .hero-micro-text {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 2.5rem;
+        display: block;
+        font-weight: 300;
+        letter-spacing: 0.3px;
+    }
+}
+
+.cta-group {
+    display: flex;
+    gap: 1rem;
+
+    @media (max-width: 900px) {
+        justify-content: center;
+    }
+
+    button {
+        padding: 14px 32px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(200, 162, 74, 0.2);
+        }
+    }
+
+    .btn-gold {
+        background: linear-gradient(135deg, $primary-gold 0%, $primary-gold-dim 100%);
+        border: none;
+        color: #000;
+    }
+
+    .btn-outline {
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid $primary-gold;
+        color: $primary-gold;
+
+        &:hover {
+            background: rgba(200, 162, 74, 0.1);
+        }
+    }
+}
+
+.hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    /* Pushes card to the right edge of container */
+    padding-left: 2rem;
+    margin-top: -3rem;
+    /* Lift card visually */
+
+    @media (max-width: 900px) {
+        justify-content: center;
+        padding-left: 0;
+        width: 100%;
+    }
+}
+
+.auth-card-preview {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 380px;
+    /* Slightly wider */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+    .preview-header {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 1rem;
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .red {
+            background: #ff5f57;
+        }
+
+        .yellow {
+            background: #febc2e;
+        }
+
+        .green {
+            background: #28c840;
+        }
+    }
+
+    .mock-product-img {
+        height: 180px;
+        background: linear-gradient(120deg, #1a3a32 0%, #2f4f47 100%);
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        position: relative;
+        overflow: hidden;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: skewX(-20deg) translateX(-150%);
+            animation: shimmerSlide 2s infinite;
+        }
+    }
+
+    .status-bar {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+
+        .progress {
+            height: 6px;
+            background: #222;
+            border-radius: 3px;
+            overflow: hidden;
+
+            .fill {
+                height: 100%;
+                background: #28c840;
+            }
+        }
+
+        .score {
+            align-self: flex-end;
+            color: #28c840;
+            font-size: 0.8rem;
+        }
+    }
+
+    .suggestions {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 0.85rem;
+        color: #ccc;
+
+        li {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+}
+
+.floating-animation {
+    animation: float 6s ease-in-out infinite;
+}
+
+
+/* 2. FEATURED CARDS */
+.features-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: -3rem;
+    /* Overlap hero */
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 3;
+    /* Removed center alignment or width constraints here as they are now handled by .page-container */
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        margin-top: 2rem;
+    }
+}
+
+.feature-card {
+    background: linear-gradient(145deg, #0a1f1b, #071613);
+    border: 1px solid rgba(200, 162, 74, 0.15);
+    padding: 2.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 100%;
+    /* Match height */
+
+    &:hover {
+        transform: translateY(-8px);
+        border-color: $primary-gold;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .icon-circle {
+        width: 50px;
+        height: 50px;
+        background: rgba(200, 162, 74, 0.1);
+        color: $primary-gold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #fff;
+    }
+
+    p {
+        color: $text-muted;
+        margin-bottom: 1.5rem;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 2rem;
+
+        li {
+            color: #ccc;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+    }
+
+    .link-btn {
+        background: none;
+        border: none;
+        color: $primary-gold;
+        text-transform: uppercase;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0;
+        font-size: 0.9rem;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+/* 3. TRENDING/NEW ARRIVALS SECTIONS */
+.trending-section {
+    margin-bottom: 2rem;
+    /* Reduced from 6rem */
+    padding-top: 4rem;
+    margin-top: 0;
+
+    /* When a trending section follows another, reduce the top gap */
+    &+.trending-section {
+        padding-top: 1.5rem;
+        /* ~24px */
+    }
+
+    @media (max-width: 768px) {
+        margin-bottom: 1.5rem;
+        padding-top: 2rem;
+
+        &+.trending-section {
+            padding-top: 1rem;
+        }
+    }
+}
+
+/* 5. TRUST STRIP */
+.trust-strip {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+
+    .trust-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #888;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        .icon {
+            font-size: 1.2rem;
+            filter: grayscale(1);
+        }
+    }
+}
+
+/* Keyframes */
+@keyframes fadeInSlideRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes shimmerSlide {
+    0% {
+        transform: skewX(-20deg) translateX(-150%);
+    }
+
+    100% {
+        transform: skewX(-20deg) translateX(150%);
+    }
+}
