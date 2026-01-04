@@ -1,0 +1,181 @@
+// Local Variables
+$gold: #C6A87C;
+$dark-bg: #0E1917;
+$panel-bg: #15201D;
+$item-hover: #1F2D28;
+$text-main: #E0E0E0;
+$text-muted: #8CA394;
+
+.dialog-container {
+    background-color: $dark-bg;
+    color: $text-main;
+    padding: 0;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba($gold, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+
+    .dialog-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        h2 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            color: $gold;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .close-btn {
+            color: $text-muted;
+
+            &:hover {
+                color: $text-main;
+                background: rgba(255, 255, 255, 0.05);
+            }
+        }
+    }
+
+    .search-bar {
+        padding: 16px 24px;
+        position: relative;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        background: $panel-bg;
+        display: flex;
+        align-items: center;
+
+        .search-icon {
+            color: $gold;
+            margin-right: 12px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: $text-main;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+
+            &:focus {
+                outline: none;
+            }
+
+            &::placeholder {
+                color: rgba($text-muted, 0.5);
+            }
+        }
+    }
+
+    .category-list {
+        overflow-y: auto;
+        padding: 8px 0;
+        min-height: 200px;
+        max-height: 400px;
+
+        // Scrollbar styling
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba($gold, 0.3);
+            border-radius: 3px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+
+            &:hover {
+                background-color: $item-hover;
+                border-left-color: rgba($gold, 0.5);
+                padding-left: 28px;
+
+                .cat-name {
+                    color: $gold;
+                }
+
+                .chevron {
+                    opacity: 1;
+                    transform: translateX(4px);
+                }
+            }
+
+            .cat-icon-placeholder {
+                width: 36px;
+                height: 36px;
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 16px;
+                color: $text-muted;
+
+                mat-icon {
+                    font-size: 20px;
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+
+            .cat-info {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+
+                .cat-name {
+                    font-size: 1rem;
+                    font-weight: 500;
+                    color: $text-main;
+                    margin-bottom: 2px;
+                    transition: color 0.2s;
+                }
+
+                .cat-meta {
+                    font-size: 0.8rem;
+                    color: rgba($text-muted, 0.7);
+                }
+            }
+
+            .chevron {
+                color: $gold;
+                opacity: 0;
+                transition: all 0.2s;
+                font-size: 20px;
+            }
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: $text-muted;
+            opacity: 0.5;
+
+            mat-icon {
+                font-size: 48px;
+                width: 48px;
+                height: 48px;
+                margin-bottom: 8px;
+            }
+        }
+    }
+}

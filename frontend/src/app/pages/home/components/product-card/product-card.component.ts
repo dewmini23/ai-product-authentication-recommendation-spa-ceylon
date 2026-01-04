@@ -7,8 +7,8 @@ import { Product } from '../../../../core/models/product.model';
     <div class="product-card">
       <div class="image-container">
         <!-- Placeholder for image, using skeleton-like bg if no url -->
-        <div class="skeleton-img" *ngIf="!product.imageUrl"></div>
-        <img *ngIf="product.imageUrl" [src]="product.imageUrl" [alt]="product.name" loading="lazy">
+        <div class="skeleton-img" *ngIf="!product.imageUrl && !product.primary_image_url"></div>
+        <img *ngIf="product.imageUrl || product.primary_image_url" [src]="product.primary_image_url || product.imageUrl" [alt]="product.name" loading="lazy">
         
         <!-- Award Badge (New) -->
         <span class="award-tag" *ngIf="product.isAwardWinner">
@@ -25,7 +25,7 @@ import { Product } from '../../../../core/models/product.model';
         <div class="rating">
            <span *ngFor="let star of [1,2,3,4,5]; let i = index" [class.filled]="i < product.rating">★</span>
         </div>
-        <div class="price">LKR {{ product.price | number }}</div>
+        <div class="price">LKR {{ (product.price_lkr || product.price) | number }}</div>
         
         <div class="actions">
           <button class="btn-outline" (click)="onQuickView()">Quick View</button>
@@ -76,9 +76,15 @@ import { Product } from '../../../../core/models/product.model';
     .image-container {
       position: relative;
       width: 100%;
-      height: 260px; /* Fixed height to prevent massive cards */
+      height: 260px; /* Desktop Fixed Height */
       background: #0a1f1b;
       overflow: hidden;
+
+      @media (max-width: 480px) {
+          height: auto;
+          aspect-ratio: 1 / 1;
+      }
+
 
       .skeleton-img, img {
         position: absolute;
@@ -185,6 +191,10 @@ import { Product } from '../../../../core/models/product.model';
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
+
+      @media (max-width: 480px) {
+          grid-template-columns: 1fr; /* Stack buttons vertically */
+      }
 
       button {
         cursor: pointer;

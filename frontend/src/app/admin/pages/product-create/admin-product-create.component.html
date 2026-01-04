@@ -1,0 +1,357 @@
+<div class="page-container">
+
+    <!-- HEADER (Outside cards for cleaner hierarchy) -->
+    <div class="page-header">
+        <h1>Add New Product</h1>
+        <p>Create a premium product record</p>
+    </div>
+
+    <!-- PROGRESS (Visual Only) -->
+    <div class="form-progress">
+        <div class="step active"></div>
+        <div class="step active"></div>
+        <div class="step"></div>
+    </div>
+
+    <form [formGroup]="productForm" class="create-form">
+
+        <!-- CARD 1: BASICS -->
+        <!-- CARD 1: BASICS -->
+        <section class="section-card basic-info">
+            <div class="section-header">
+                <h3 class="header-title">Basic Information</h3>
+                <span class="header-helper">Primary product details</span>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Product Name <span class="req">*</span></div>
+                <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+                    <mat-icon matPrefix>label</mat-icon>
+                    <input matInput formControlName="name" placeholder="e.g. Sleep Intense Dream Essence Mist">
+                    <mat-error *ngIf="showError('name')">Product name is required (3-120 chars)</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="grid-basics">
+                <div class="span-2">
+                    <div class="field">
+                        <div class="field-label">Category <span class="req">*</span></div>
+
+                        <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+                            <mat-icon matPrefix>category</mat-icon>
+
+                            <mat-select #categorySelect formControlName="category_id" placeholder="Select a category"
+                                [panelClass]="'lux-select-panel'">
+
+                                <mat-select-trigger>
+                                    {{ selectedCategoryName || 'Select a category' }}
+                                </mat-select-trigger>
+
+                                <mat-option *ngFor="let c of categories" [value]="c.id">
+                                    {{ c.name }}
+                                </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="showError('category_id')">Category is required</mat-error>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-label">Price (LKR) <span class="req">*</span></div>
+                    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                        <mat-icon matPrefix>payments</mat-icon>
+                        <input matInput type="number" formControlName="price_lkr" min="0" placeholder="0.00">
+                        <mat-error *ngIf="showError('price_lkr')">Required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="field">
+                    <div class="field-label">Stock <span class="req">*</span></div>
+                    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                        <mat-icon matPrefix>inventory_2</mat-icon>
+                        <input matInput type="number" formControlName="stock_qty" min="0" placeholder="0">
+                        <mat-error *ngIf="showError('stock_qty')">Required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARD 2: CONTENT -->
+        <section class="section-card">
+            <div class="section-header">
+                <h3 class="header-title">Product Content</h3>
+                <span class="header-helper">Marketing & usage details</span>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Short Description <span class="req">*</span></div>
+                <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+                    <mat-icon matPrefix>short_text</mat-icon>
+                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="4"
+                        formControlName="short_description" maxlength="250"
+                        placeholder="Brief summary for cards..."></textarea>
+                    <mat-hint align="end">{{ productForm.get('short_description')?.value?.length || 0 }}/250</mat-hint>
+                    <mat-error *ngIf="showError('short_description')">Required (10-250 chars)</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Full Description (Product Page) <span class="req">*</span></div>
+                <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+                    <mat-icon matPrefix>article</mat-icon>
+                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="8"
+                        formControlName="description" placeholder="Detailed product story..."></textarea>
+                    <mat-hint>Min 20 characters to publish</mat-hint>
+                    <mat-error *ngIf="showError('description')">Description too short</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="grid-2">
+                <div class="field">
+                    <div class="field-label">Ingredients List</div>
+                    <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+                        <mat-icon matPrefix>spa</mat-icon>
+                        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="6"
+                            formControlName="ingredients" placeholder="Comma separated list..."></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="field">
+                    <div class="field-label">How to Use</div>
+                    <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+                        <mat-icon matPrefix>touch_app</mat-icon>
+                        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="6"
+                            formControlName="how_to_use" placeholder="Application instructions..."></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARD 3: VISIBILITY -->
+        <mat-expansion-panel class="section-panel" [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Visibility & Tags</mat-panel-title>
+                <mat-panel-description>Badge assignments</mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="toggles-grid">
+                <!-- New Arrival -->
+                <div class="toggle-card" [class.active-card]="productForm.get('is_new_arrival')?.value">
+                    <div class="card-icon">
+                        <mat-icon>new_releases</mat-icon>
+                    </div>
+                    <div class="card-info">
+                        <span class="label">New Arrival</span>
+                        <span class="sub">Mark as fresh drop</span>
+                    </div>
+                    <mat-slide-toggle formControlName="is_new_arrival" color="primary"></mat-slide-toggle>
+                </div>
+
+                <!-- Trending -->
+                <div class="toggle-card" [class.active-card]="productForm.get('is_trending')?.value">
+                    <div class="card-icon">
+                        <mat-icon>trending_up</mat-icon>
+                    </div>
+                    <div class="card-info">
+                        <span class="label">Trending</span>
+                        <span class="sub">High engagement</span>
+                    </div>
+                    <mat-slide-toggle formControlName="is_trending" color="primary"></mat-slide-toggle>
+                </div>
+
+                <!-- Award Winner -->
+                <div class="toggle-card" [class.active-card]="productForm.get('is_award_winner')?.value">
+                    <div class="card-icon">
+                        <mat-icon>emoji_events</mat-icon>
+                    </div>
+                    <div class="card-info">
+                        <span class="label">Award Winner</span>
+                        <span class="sub">Quality recognition</span>
+                    </div>
+                    <mat-slide-toggle formControlName="is_award_winner" color="primary"></mat-slide-toggle>
+                </div>
+
+                <!-- Festive -->
+                <div class="toggle-card" [class.active-card]="productForm.get('is_festive')?.value">
+                    <div class="card-icon">
+                        <mat-icon>celebration</mat-icon>
+                    </div>
+                    <div class="card-info">
+                        <span class="label">Festive Season</span>
+                        <span class="sub">Holiday specials</span>
+                    </div>
+                    <mat-slide-toggle formControlName="is_festive" color="primary"></mat-slide-toggle>
+                </div>
+
+                <!-- Men -->
+                <div class="toggle-card" [class.active-card]="productForm.get('for_men')?.value">
+                    <div class="card-icon">
+                        <mat-icon>man</mat-icon>
+                    </div>
+                    <div class="card-info">
+                        <span class="label">For Men</span>
+                        <span class="sub">Gents collection</span>
+                    </div>
+                    <mat-slide-toggle formControlName="for_men" color="primary"></mat-slide-toggle>
+                </div>
+            </div>
+        </mat-expansion-panel>
+
+        <!-- CARD 4: HIGHLIGHTS -->
+        <mat-expansion-panel class="section-panel" [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Ingredient Highlights</mat-panel-title>
+                <mat-panel-description *ngIf="highlights.length > 0">{{ highlights.length }}
+                    items</mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div formArrayName="ingredient_highlights" class="highlights-section">
+                <!-- EMPTY STATE -->
+                <div class="empty-state" *ngIf="highlights.length === 0" (click)="addHighlight()">
+                    <div class="icon-circle">
+                        <mat-icon>auto_awesome</mat-icon>
+                    </div>
+                    <p>No key ingredients added yet</p>
+                    <span>Click to highlight special components</span>
+                </div>
+
+                <!-- LIST -->
+                <div *ngFor="let item of highlights.controls; let i=index" [formGroupName]="i" class="highlight-card">
+                    <div class="card-header">
+                        <span class="count">#{{ i + 1 }}</span>
+                        <button mat-icon-button class="remove-btn" (click)="removeHighlight(i)" matTooltip="Remove">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+
+                    <div class="grid-highlight">
+                        <div class="field">
+                            <div class="field-label">Ingredient</div>
+                            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                                <mat-icon matPrefix>spa</mat-icon>
+                                <input matInput formControlName="name" placeholder="e.g. White Jasmine">
+                            </mat-form-field>
+                        </div>
+                        <div class="field">
+                            <div class="field-label">Benefit</div>
+                            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                                <mat-icon matPrefix>favorite</mat-icon>
+                                <input matInput formControlName="description" placeholder="e.g. Hydrating">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions-row" *ngIf="highlights.length > 0">
+                    <button mat-stroked-button class="add-btn" (click)="addHighlight()">
+                        <mat-icon>add</mat-icon> Add Another Highlight
+                    </button>
+                </div>
+            </div>
+        </mat-expansion-panel>
+
+        <!-- CARD 5: IMAGES -->
+        <mat-expansion-panel class="section-panel" [expanded]="images.length === 0">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Product Images</mat-panel-title>
+                <mat-panel-description *ngIf="images.length > 0">
+                    {{ images.length }} active
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div formArrayName="images" class="images-section">
+                <!-- UPLOAD AREA -->
+                <div class="upload-area" (click)="triggerFileInput()">
+                    <div class="upload-content">
+                        <div class="glow-icon">
+                            <mat-icon>cloud_upload</mat-icon>
+                        </div>
+                        <h3>Upload Visuals</h3>
+                        <p>Drag & drop or click to browse</p>
+                        <span class="notes">Supports JPG, PNG (Max 5MB)</span>
+                    </div>
+                    <input type="file" id="fileUploadInput" multiple (change)="onFileSelected($event)" accept="image/*"
+                        hidden>
+                </div>
+
+                <!-- THUMBNAILS -->
+                <div class="image-grid-preview" *ngIf="images.length > 0">
+                    <div *ngFor="let control of images.controls; let i=index" class="preview-card">
+                        <div class="img-wrapper">
+                            <img [src]="control.value" (error)="onImgError($event)">
+                            <div class="overlay">
+                                <span class="img-index">{{ i + 1 }}</span>
+                            </div>
+                        </div>
+                        <button class="remove-btn" (click)="removeImage(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <input [formControlName]="i" hidden>
+                    </div>
+                </div>
+
+                <mat-error *ngIf="formSubmitted && images.length === 0" class="center-error">
+                    <mat-icon>error_outline</mat-icon>
+                    At least 1 image is required to publish.
+                </mat-error>
+            </div>
+        </mat-expansion-panel>
+
+        <!-- CARD 6: META -->
+        <mat-expansion-panel class="section-panel">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Meta Data</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="grid-2">
+                <div class="field">
+                    <div class="field-label">Rating (0-5)</div>
+                    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                        <mat-icon matPrefix>stars</mat-icon>
+                        <input matInput type="number" formControlName="rating" step="0.1" max="5"
+                            placeholder="e.g. 4.8">
+                    </mat-form-field>
+                </div>
+
+                <div class="field">
+                    <div class="field-label">Review Count</div>
+                    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                        <mat-icon matPrefix>reviews</mat-icon>
+                        <input matInput type="number" formControlName="review_count" min="0" placeholder="e.g. 120">
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-expansion-panel>
+
+    </form>
+
+
+    <!-- STICKY FOOTER ACTIONS -->
+    <div class="sticky-footer">
+        <div class="footer-content">
+            <div class="left-actions">
+                <button mat-button class="cancel-btn" (click)="cancel()">Cancel</button>
+                <button mat-stroked-button color="accent" (click)="saveDraft()" [disabled]="isLoading">
+                    Save Draft
+                </button>
+            </div>
+
+            <div class="right-actions">
+                <!-- ELEGANT BADGES -->
+                <div class="readiness-badges">
+                    <div class="badge" [class.ready]="checklist.description">
+                        Desc: {{ checklist.description ? 'Ready' : 'Missing' }}
+                    </div>
+                    <div class="badge" [class.ready]="checklist.images">
+                        Img: {{ checklist.images ? 'Ready' : 'Missing' }}
+                    </div>
+                </div>
+
+                <button mat-flat-button color="primary" class="publish-btn" (click)="publish()" [disabled]="isLoading">
+                    Publish Product
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

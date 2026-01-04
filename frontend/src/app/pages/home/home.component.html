@@ -17,25 +17,50 @@
 
             <div class="hero-visual">
                 <div class="auth-card-preview floating-animation">
-                    <div class="preview-header">
-                        <span class="dot red"></span>
-                        <span class="dot yellow"></span>
-                        <span class="dot green"></span>
-                    </div>
-                    <div class="preview-body">
-                        <div class="mock-product-img"></div>
-                        <div class="status-bar">
-                            <span>Authenticity</span>
-                            <div class="progress">
-                                <div class="fill" style="width: 92%"></div>
-                            </div>
-                            <span class="score">Verified 92%</span>
+                    <div class="card-header">
+                        <div class="header-left">
+                            <h3 class="card-title">Authenticity</h3>
+                            <p class="card-subtitle">AI verification score</p>
                         </div>
-                        <ul class="suggestions">
-                            <li>✨ Fits your Skin Type</li>
-                            <li>🌿 100% Natural Origin</li>
-                            <li>💧 High Hydration</li>
-                        </ul>
+                        <div class="status-chip verified">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Verified</span>
+                        </div>
+                    </div>
+
+                    <div class="product-preview">
+                        <img src="assets/spa-ceylon-hero.jpg" alt="Spa Ceylon Product" class="product-img">
+                    </div>
+
+                    <div class="verification-bar">
+                        <div class="bar-header">
+                            <span class="bar-label">Verification Score</span>
+                            <span class="bar-score">92%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 92%"></div>
+                        </div>
+                    </div>
+
+                    <div class="features-list">
+                        <div class="feature-row">
+                            <div class="feature-icon">
+                                <span class="icon">✓</span>
+                            </div>
+                            <span class="feature-text">Fits your Skin Type</span>
+                        </div>
+                        <div class="feature-row">
+                            <div class="feature-icon">
+                                <span class="icon">🌿</span>
+                            </div>
+                            <span class="feature-text">100% Natural Origin</span>
+                        </div>
+                        <div class="feature-row">
+                            <div class="feature-icon">
+                                <span class="icon">💧</span>
+                            </div>
+                            <span class="feature-text">High Hydration</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,10 +111,30 @@
         <app-category-masonry></app-category-masonry>
 
         <!-- 6. AWARD WINNERS CAROUSEL -->
-        <app-product-carousel title="Award Winners" [products]="awardWinnerProducts" [filters]="[]"
-            viewAllRoute="/award-winners" (quickView)="openQuickView($event)" (addToCart)="addToCart($event)"
-            class="trending-section">
+        <!-- Loading State -->
+        <div *ngIf="isLoadingAwardWinners" class="loading-section">
+            <h2 class="section-loading-title">Award Winners</h2>
+            <div class="skeleton-grid">
+                <div class="skeleton-card" *ngFor="let i of [1,2,3,4]"></div>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="awardWinnersError && !isLoadingAwardWinners" class="error-section">
+            <p class="error-text">{{ awardWinnersError }}</p>
+        </div>
+
+        <!-- Success State -->
+        <app-product-carousel *ngIf="!isLoadingAwardWinners && !awardWinnersError && awardWinnerProducts.length > 0"
+            title="Award Winners" [products]="awardWinnerProducts" [filters]="[]" viewAllRoute="/award-winners"
+            (quickView)="openQuickView($event)" (addToCart)="addToCart($event)" class="trending-section">
         </app-product-carousel>
+
+        <!-- Empty State -->
+        <div *ngIf="!isLoadingAwardWinners && !awardWinnersError && awardWinnerProducts.length === 0"
+            class="empty-section">
+            <p class="empty-text">No award winners available at this time.</p>
+        </div>
 
         <!-- 7. CUSTOMER REVIEWS -->
         <app-reviews-section></app-reviews-section>

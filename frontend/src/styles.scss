@@ -7,9 +7,31 @@
 
 html,
 body {
-    height: 100%;
     margin: 0;
     overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .page-container,
+    .home-container,
+    main {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    img,
+    video {
+        max-width: 100%;
+        height: auto;
+    }
 }
 
 body {
@@ -17,7 +39,7 @@ body {
     /* Deep herbal green + dark teal + deep purple gradient */
     background-color: #08241F;
     background-image:
-        url('assets/mandala-static.svg'),
+        /* url('assets/mandala-static.svg'), */
         linear-gradient(135deg, #08241F 0%, #0B3B36 40%, #1B1025 100%);
 
     background-repeat: repeat, no-repeat;
@@ -69,3 +91,153 @@ button {
 ::-webkit-scrollbar-thumb:hover {
     background: lighten(#C9A646, 10%);
 }
+
+/* =========================================
+   ADMIN MODE SPECIFIC OVERRIDES
+   ========================================= */
+// Ensure Angular Material CDK Overlays (Dropdowns, Dialogs)
+// appear on TOP of the complex Admin Layout z-index stack.
+body.admin-mode .cdk-overlay-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    z-index: 20000 !important;
+}
+
+body.admin-mode .cdk-overlay-pane {
+    pointer-events: auto !important;
+    z-index: 20001 !important;
+}
+
+// DROPDOWN PANEL STYLING (Admin Mode) - Premium Spa Ceylon Style
+// DROPDOWN PANEL STYLING (Admin Mode) - Clean Minimal Style
+body.admin-mode .mat-mdc-select-panel {
+    background: #141a16 !important; // Solid dark background
+    border: 1px solid rgba(198, 168, 124, 0.2) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+    padding: 8px 0 !important;
+    margin-top: 8px !important;
+    max-height: 400px !important;
+    overflow-y: auto !important;
+
+    // Hardware acceleration for smooth rendering (no flicker)
+    transform: translateZ(0);
+    will-change: auto;
+
+    // Options styling
+    .mat-mdc-option {
+        color: #e0e0e0 !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 0.95rem !important;
+        font-weight: 400 !important;
+        padding: 12px 20px !important;
+        min-height: 48px !important;
+        transition: background-color 0.2s ease, color 0.2s ease !important;
+        background: transparent !important;
+
+        .mdc-list-item__primary-text {
+            color: #e0e0e0 !important;
+        }
+
+        // Hover state - subtle highlight
+        &:hover,
+        &.mat-mdc-option-active {
+            background: rgba(198, 168, 124, 0.08) !important; // Subtle gold tint
+            color: #f5e6d3 !important;
+
+            .mdc-list-item__primary-text {
+                color: #f5e6d3 !important;
+            }
+        }
+
+        // Selected state - clear gold highlight
+        &.mat-mdc-option-selected:not(.mat-mdc-option-multiple) {
+            background: rgba(198, 168, 124, 0.15) !important; // Stronger gold tint
+            color: #c6a87c !important;
+            font-weight: 500 !important;
+
+            .mdc-list-item__primary-text {
+                color: #c6a87c !important;
+            }
+
+            // Checkmark color
+            .mat-pseudo-checkbox-checked::after {
+                color: #c6a87c !important;
+            }
+        }
+
+        // Ripple effect
+        .mat-ripple-element {
+            background-color: rgba(198, 168, 124, 0.1) !important;
+        }
+    }
+
+    // Scrollbar styling
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(198, 168, 124, 0.3);
+        border-radius: 3px;
+
+        &:hover {
+            background: rgba(198, 168, 124, 0.5);
+        }
+    }
+}
+
+// Dropdown entrance animation
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+// /* =========================================
+//    GLOBAL ANIMATIONS
+//    ========================================= */
+// @keyframes shimmer {
+//     0% {
+//         transform: translateX(-100%);
+//     }
+
+//     100% {
+//         transform: translateX(100%);
+//     }
+// }
+
+// @keyframes fadeInUp {
+//     from {
+//         opacity: 0;
+//         transform: translateY(20px);
+//     }
+
+//     to {
+//         opacity: 1;
+//         transform: translateY(0);
+//     }
+// }
+
+/* Fix overlay anchoring: DO NOT transform the main app wrapper */
+// body.admin-mode .admin-content {
+//     /* replace with the culprit selector from console */
+//     transform: none !important;
+//     filter: none !important;
+//     perspective: none !important;
+//     contain: initial !important;
+// }

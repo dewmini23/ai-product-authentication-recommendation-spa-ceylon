@@ -1,0 +1,57 @@
+<div class="admin-container" [class.collapsed]="isSidebarCollapsed">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="logo-circle">SC</div>
+            <span class="brand-text">Spa Ceylon</span>
+        </div>
+
+        <nav class="nav-links">
+            <a routerLink="/admin/products" routerLinkActive="active" class="nav-item">
+                <span class="icon">📦</span>
+                <span class="label">Products</span>
+            </a>
+            <a routerLink="/admin/orders" class="nav-item disabled">
+                <span class="icon">🛒</span>
+                <span class="label">Orders</span>
+            </a>
+            <a routerLink="/admin/customers" class="nav-item disabled">
+                <span class="icon">👥</span>
+                <span class="label">Customers</span>
+            </a>
+            <a routerLink="/admin/analytics" class="nav-item disabled">
+                <span class="icon">📊</span>
+                <span class="label">Analytics</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a routerLink="/" class="nav-item">
+                <mat-icon class="icon">keyboard_return</mat-icon>
+                <span class="label">Back to Site</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="toggle-btn" (click)="toggleSidebar()">☰</div>
+            <h2 class="page-title">Admin Portal</h2>
+
+            <div class="spacer"></div>
+
+
+            <div class="user-profile">
+                <span class="user-name">Admin User</span>
+                <div class="avatar">A</div>
+            </div>
+        </header>
+
+        <!-- Router Outlet -->
+        <div class="content-area" cdkScrollable>
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>

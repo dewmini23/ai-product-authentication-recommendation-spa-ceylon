@@ -1,0 +1,112 @@
+<div class="product-detail-page" *ngIf="!isLoading && product">
+    <div class="page-container">
+        <!-- Back Button -->
+        <button class="back-btn" (click)="goBack()">← Back to Shop</button>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <!-- Left: Image Gallery -->
+            <div class="image-gallery">
+                <div class="main-image">
+                    <img [src]="getImages()[selectedImageIndex]" [alt]="product.name">
+                </div>
+                <div class="thumbnails" *ngIf="getImages().length > 1">
+                    <div *ngFor="let img of getImages(); let i = index" class="thumbnail"
+                        [class.active]="i === selectedImageIndex" (click)="selectImage(i)">
+                        <img [src]="img" [alt]="product.name">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Product Info -->
+            <div class="product-info">
+                <span class="category">{{ product.category }}</span>
+                <h1>{{ product.name }}</h1>
+
+                <div class="rating-row">
+                    <div class="stars">
+                        <span *ngFor="let star of [1,2,3,4,5]; let i = index"
+                            [class.filled]="i < product.rating">★</span>
+                    </div>
+                    <span class="review-count">({{ product.review_count || 124 }} reviews)</span>
+                </div>
+
+                <div class="price">LKR {{ getPrice() | number }}</div>
+
+                <p class="short-description" *ngIf="getShortDescription()">{{ getShortDescription() }}</p>
+
+                <div class="stock-and-actions">
+                    <div class="stock-badge" *ngIf="hasStockInfo()">
+                        <span class="in-stock" *ngIf="getStockQty() > 0">✓ In Stock</span>
+                        <span class="out-of-stock" *ngIf="getStockQty() === 0">Out of Stock</span>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn-add" (click)="onAddToCart()" aria-label="Add to Cart">
+                            <span class="btn-icon">🛒</span>
+                            <span class="btn-label">Add</span>
+                        </button>
+                        <button class="btn-auth" (click)="onAuthenticate()" aria-label="Authenticate Product">
+                            <span class="btn-icon">✓</span>
+                            <span class="btn-label">Auth</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="certifications">
+                    <img src="assets/certifications.png" alt="Product Certifications" class="cert-image">
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Sections -->
+        <div class="details-sections">
+            <!-- About This Product -->
+            <section class="detail-section" *ngIf="getFullDescription()">
+                <h2>About This Product</h2>
+                <p class="description-text">{{ getFullDescription() }}</p>
+            </section>
+
+            <!-- Key Ingredients -->
+            <section class="detail-section" *ngIf="getKeyIngredients().length > 0">
+                <h2>Key Ingredients</h2>
+                <div class="ingredient-chips">
+                    <span class="chip" *ngFor="let ingredient of getKeyIngredients()">{{ ingredient }}</span>
+                </div>
+            </section>
+
+            <!-- Ingredient Spotlight -->
+            <section class="detail-section" *ngIf="getIngredientHighlights().length > 0">
+                <h2>Ingredient Spotlight</h2>
+                <div class="spotlight-grid">
+                    <div class="spotlight-card" *ngFor="let highlight of getIngredientHighlights()">
+                        <div class="card-icon">{{ getIngredientEmoji(highlight.name) }}</div>
+                        <h4>{{ highlight.name }}</h4>
+                        <p>{{ highlight.description }}</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How to Use -->
+            <section class="detail-section" *ngIf="getHowToUse()">
+                <h2>How to Use</h2>
+                <div class="how-to-content">
+                    <div class="how-to-icon">💡</div>
+                    <p>{{ getHowToUse() }}</p>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading product details...</p>
+</div>
+
+<!-- Error State -->
+<div class="error-state" *ngIf="error && !isLoading">
+    <p>{{ error }}</p>
+    <button class="btn-primary" (click)="goBack()">Back to Shop</button>
+</div>

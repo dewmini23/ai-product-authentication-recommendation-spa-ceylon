@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build output + Angular cache
+dist/
+.angular/
+*.tsbuildinfo
+
+# Test output
+coverage/
+.nyc_output/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE: ignore most VSCode files but allow shared settings if they exist
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+.idea/
+*.swp
+*.swo
+*~

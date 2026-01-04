@@ -1,0 +1,217 @@
+<div class="page-container">
+    <mat-card class="editor-card luxury-theme">
+
+        <!-- Header -->
+        <div class="editor-header">
+            <div class="title-group">
+                <span class="sub-label">PRODUCT EDITOR</span>
+                <h1>{{ productForm.get('name')?.value || 'New Product' }}</h1>
+            </div>
+            <div class="status-badge">
+                {{ isLoading ? 'Loading...' : 'DRAFT MODE' }}
+            </div>
+        </div>
+
+        <!-- Main Form -->
+        <form [formGroup]="productForm" class="editor-form">
+            <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="start" class="luxury-tabs">
+
+                <!-- TAB 1: BASICS -->
+                <mat-tab label="Basics">
+                    <div class="tab-content grid-2">
+                        <mat-form-field appearance="outline" class="full-col">
+                            <mat-label>Product Name (Required)</mat-label>
+                            <input matInput formControlName="name" placeholder="Ex: Sleep Intense Dream Essence Mist">
+                            <mat-error *ngIf="productForm.get('name')?.hasError('required')">Name is
+                                required</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Category</mat-label>
+                            <mat-select formControlName="category_id">
+                                <mat-option *ngFor="let cat of categories$ | async" [value]="cat.id">
+                                    {{ cat.name }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Category is required</mat-error>
+                        </mat-form-field>
+
+                        <div class="price-stock-group">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Price (LKR)</mat-label>
+                                <input matInput type="number" formControlName="price_lkr" min="0">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Stock Qty</mat-label>
+                                <input matInput type="number" formControlName="stock_qty" min="0">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <!-- TAB 2: CONTENT -->
+                <mat-tab label="Content">
+                    <div class="tab-content">
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Short Description (Card View)</mat-label>
+                            <textarea matInput formControlName="short_description" rows="3" maxlength="250"></textarea>
+                            <mat-hint align="end">{{ productForm.get('short_description')?.value?.length || 0
+                                }}/250</mat-hint>
+                            <mat-error>Required (Min 10 chars)</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Full Description (Product Page)</mat-label>
+                            <textarea matInput formControlName="description" rows="8"></textarea>
+                            <mat-hint>Required for Publish (Min 20 chars)</mat-hint>
+                        </mat-form-field>
+
+                        <div class="grid-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Ingredients List</mat-label>
+                                <textarea matInput formControlName="ingredients" rows="5"></textarea>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>How to Use</mat-label>
+                                <textarea matInput formControlName="how_to_use" rows="5"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <!-- TAB 3: VISIBILITY -->
+                <mat-tab label="Visibility">
+                    <div class="tab-content">
+                        <div class="toggles-grid">
+                            <div class="toggle-item">
+                                <mat-slide-toggle formControlName="is_new_arrival" color="primary">New
+                                    Arrival</mat-slide-toggle>
+                                <p class="help-text">Boosts visibility in 'New' section.</p>
+                            </div>
+                            <div class="toggle-item">
+                                <mat-slide-toggle formControlName="is_trending"
+                                    color="primary">Trending</mat-slide-toggle>
+                                <p class="help-text">Marks product as 'Hot'.</p>
+                            </div>
+                            <div class="toggle-item">
+                                <mat-slide-toggle formControlName="is_award_winner" color="primary">Award
+                                    Winner</mat-slide-toggle>
+                                <p class="help-text">Displays award badge on card.</p>
+                            </div>
+                            <div class="toggle-item">
+                                <mat-slide-toggle formControlName="is_festive" color="primary">Festive
+                                    Season</mat-slide-toggle>
+                                <p class="help-text">Adds festive styling overlay.</p>
+                            </div>
+                            <div class="toggle-item">
+                                <mat-slide-toggle formControlName="for_men" color="primary">For Men</mat-slide-toggle>
+                                <p class="help-text">Filters into Men's category.</p>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <!-- TAB 4: HIGHLIGHTS -->
+                <mat-tab label="Highlights">
+                    <div class="tab-content" formArrayName="ingredient_highlights">
+                        <div *ngFor="let item of highlights.controls; let i=index" [formGroupName]="i"
+                            class="highlight-card">
+                            <div class="card-header">
+                                <span>Highlight #{{i+1}}</span>
+                                <button mat-icon-button color="warn"
+                                    (click)="removeHighlight(i)"><mat-icon>close</mat-icon></button>
+                            </div>
+                            <div class="card-body grid-2">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Name (Ex: Paraben Free)</mat-label>
+                                    <input matInput formControlName="name">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Description</mat-label>
+                                    <input matInput formControlName="description">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <button mat-stroked-button class="add-btn" (click)="addHighlight()">
+                            <mat-icon>add</mat-icon> Add Highlight
+                        </button>
+                    </div>
+                </mat-tab>
+
+                <!-- TAB 5: IMAGES -->
+                <mat-tab label="Images">
+                    <div class="tab-content" formArrayName="images">
+                        <p class="section-desc">Manage product image URLs. First image is primary.</p>
+
+                        <div class="images-list">
+                            <div *ngFor="let control of images.controls; let i=index" class="image-row">
+                                <mat-form-field appearance="outline" class="url-input">
+                                    <mat-label>Image URL</mat-label>
+                                    <input matInput [formControlName]="i" placeholder="https://...">
+                                </mat-form-field>
+                                <div class="preview">
+                                    <img [src]="control.value" (error)="onImgError($event)" *ngIf="control.value">
+                                </div>
+                                <button mat-icon-button color="warn"
+                                    (click)="removeImage(i)"><mat-icon>delete</mat-icon></button>
+                            </div>
+                        </div>
+
+                        <button mat-stroked-button class="add-btn" (click)="addImage()">
+                            <mat-icon>add_photo_alternate</mat-icon> Add Image URL
+                        </button>
+
+                        <div class="upload-placeholder">
+                            <mat-icon>cloud_upload</mat-icon>
+                            <span>File Upload Coming Soon</span>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <!-- TAB 6: META -->
+                <mat-tab label="Meta (Advanced)">
+                    <div class="tab-content grid-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Rating (0-5)</mat-label>
+                            <input matInput type="number" formControlName="rating" step="0.1" max="5">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Review Count</mat-label>
+                            <input matInput type="number" formControlName="review_count" min="0">
+                        </mat-form-field>
+                    </div>
+                </mat-tab>
+
+            </mat-tab-group>
+        </form>
+
+        <!-- STICKY FOOTER ACTIONS -->
+        <div class="editor-actions">
+            <div class="left-group">
+                <button mat-button (click)="cancel()">Back to List</button>
+                <button mat-button (click)="discardChanges()" class="w-text">Discard Changes</button>
+            </div>
+
+            <div class="checklist-mini" *ngIf="showChecklist">
+                <div class="check-item" [class.ok]="isPublishReady().valid" [class.fail]="!isPublishReady().valid">
+                    {{ isPublishReady().valid ? '✔ Ready to Publish' : '⚠ Action Required' }}
+                </div>
+                <div class="check-errors" *ngIf="isPublishReady().errors.length > 0">
+                    <span *ngFor="let err of isPublishReady().errors">• {{err}}</span>
+                </div>
+            </div>
+
+            <div class="right-group">
+                <button mat-stroked-button color="accent" (click)="saveDraft()" [disabled]="isLoading">Save
+                    Draft</button>
+                <button mat-flat-button color="primary" class="publish-btn" (click)="publish()" [disabled]="isLoading">
+                    Publish Product
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>

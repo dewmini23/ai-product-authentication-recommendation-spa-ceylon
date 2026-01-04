@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
-import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 import { NavbarComponent } from './core/components/navbar/navbar.component';
 import { FooterComponent } from './core/components/footer/footer.component';
@@ -17,6 +17,7 @@ import { ProductCarouselComponent } from './components/product-carousel/product-
 import { CategoryMasonryComponent } from './components/category-masonry/category-masonry.component';
 import { ReviewsSectionComponent } from './pages/home/components/reviews-section/reviews-section.component';
 import { FaqSectionComponent } from './pages/home/components/faq-section/faq-section.component';
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
 @NgModule({
     declarations: [
@@ -29,16 +30,15 @@ import { FaqSectionComponent } from './pages/home/components/faq-section/faq-sec
         ProductCarouselComponent,
         CategoryMasonryComponent,
         ReviewsSectionComponent,
-        FaqSectionComponent
+        FaqSectionComponent,
+        ProductDetailComponent
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
         AppRoutingModule,
-        AuthModule // Eagerly loaded for this prompt requirement, or lazy loaded via router.
-        // AuthModule handles its own routing, but if we want '' -> login, we might need to be careful with order.
-        // Usually better to lazy load, but for simplicity/prompt requirements "Default route ('') should redirect to /login" can be in AppRoutingModule.
+        AuthModule
     ],
     providers: [
         {

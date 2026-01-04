@@ -1,0 +1,60 @@
+<div class="modal-overlay" *ngIf="isOpen" (click)="closeModal()">
+    <div class="modal-content draft-modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h3>Create Product Draft</h3>
+            <button class="close-btn" (click)="closeModal()">×</button>
+        </div>
+
+        <div class="modal-body">
+            <p class="hint-text">Start by filling in the basics. You can add full details and images in the editor
+                later.</p>
+
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label>Product Name <span class="req">*</span></label>
+                    <input type="text" [(ngModel)]="formData.name" placeholder="Ex: Sleep Intense Dream Essence Mist">
+                    <small *ngIf="formData.name && formData.name.length < 3" class="error">Min 3 chars required</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Category <span class="req">*</span></label>
+                    <select [(ngModel)]="formData.category_id">
+                        <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Price (LKR) <span class="req">*</span></label>
+                    <input type="number" [(ngModel)]="formData.price_lkr" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Stock Qty <span class="req">*</span></label>
+                    <input type="number" [(ngModel)]="formData.stock_qty" min="0">
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Short Description <span class="req">*</span></label>
+                    <textarea [(ngModel)]="formData.short_description" rows="2"
+                        placeholder="Brief summary for card display..."></textarea>
+                    <small *ngIf="formData.short_description && formData.short_description.length < 10"
+                        class="error">Min 10 chars required</small>
+                </div>
+
+                <!-- Optional Initial Flag -->
+                <div class="form-group full-width">
+                    <mat-slide-toggle [(ngModel)]="formData.is_new_arrival" color="primary">
+                        Mark as New Arrival?
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-text" (click)="closeModal()">Cancel</button>
+            <button class="btn-primary" (click)="onSave()" [disabled]="!isFormValid() || isLoading">
+                {{ isLoading ? 'Saving...' : (product ? 'Save Changes' : 'Create Draft') }}
+            </button>
+        </div>
+    </div>
+</div>

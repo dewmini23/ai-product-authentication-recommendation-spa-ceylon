@@ -1,0 +1,34 @@
+<div class="dialog-container">
+    <div class="dialog-header">
+        <h2>Choose Category</h2>
+        <button mat-icon-button (click)="close()" class="close-btn">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <div class="search-bar">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input type="text" [formControl]="searchControl" placeholder="Search categories..." class="search-input"
+            autofocus>
+    </div>
+
+    <div class="category-list">
+        <div *ngFor="let category of filteredCategories$ | async" class="category-item"
+            (click)="selectCategory(category)">
+            <div class="cat-icon-placeholder">
+                <mat-icon>category</mat-icon>
+            </div>
+            <div class="cat-info">
+                <span class="cat-name">{{ category.name }}</span>
+                <span class="cat-meta" *ngIf="category.description">{{ category.description | slice:0:40 }}{{
+                    category.description.length > 40 ? '...' : '' }}</span>
+            </div>
+            <mat-icon class="chevron">chevron_right</mat-icon>
+        </div>
+
+        <div class="empty-state" *ngIf="(filteredCategories$ | async)?.length === 0">
+            <mat-icon>search_off</mat-icon>
+            <p>No categories found</p>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,33 @@
 @import '../../../../styles/theme';
 
-// Login Container - Transparent to let body background show through
+// Auth Page Wrapper - Fixed Background Layer
+.auth-page {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+
+    // Fixed background pseudo-element to prevent tiling artifacts
+    &::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+
+        // Background matching global styles but as single composited layer
+        background-color: #08241F;
+        background-image: linear-gradient(135deg, #08241F 0%, #0B3B36 40%, #1B1025 100%);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        // Prevent subpixel seams
+        transform: translateZ(0);
+        will-change: auto;
+    }
+}
+
+// Login Container - Transparent to let background show through
 .login-container {
     display: flex;
     justify-content: center;

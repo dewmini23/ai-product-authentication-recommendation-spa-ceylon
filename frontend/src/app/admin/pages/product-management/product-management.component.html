@@ -1,0 +1,100 @@
+<div class="page-container">
+    <div class="page-header">
+        <div class="title-group">
+            <h1>Product Management</h1>
+            <p>Manage catalog, images, and visibility flags</p>
+        </div>
+        <div class="actions">
+            <button class="btn-secondary" (click)="exportCsv()">Export CSV</button>
+            <button class="btn-primary" routerLink="/admin/products/new">+ Add Product</button>
+        </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="label">Total Products</div>
+            <div class="value">{{ totalProducts }}</div>
+        </div>
+        <div class="stat-card gold">
+            <div class="label">Trending</div>
+            <div class="value">{{ trendingCount }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">New Arrivals</div>
+            <div class="value">{{ newArrivalsCount }}</div>
+        </div>
+        <div class="stat-card red">
+            <div class="label">Out of Stock</div>
+            <div class="value">{{ outOfStockCount }}</div>
+        </div>
+    </div>
+
+    <!-- Filter Row -->
+    <div class="filter-bar">
+        <div class="left-filters">
+            <input type="text" class="search-input" [formControl]="searchCtrl" (keydown.enter)="onSearchEnter()"
+                placeholder="Search products...">
+
+            <select class="filter-select" [(ngModel)]="selectedCategory" (change)="applyFilters()">
+                <option value="All">All Categories</option>
+                <option *ngFor="let cat of categories" [value]="cat.name">{{ cat.name }}</option>
+            </select>
+
+            <label class="toggle-filter">
+                <input type="checkbox" [(ngModel)]="showTrendingOnly" (change)="applyFilters()">
+                <span>Trending Only</span>
+            </label>
+        </div>
+        <div class="right-sort">
+            <span class="sort-label">Sort by:</span>
+            <select class="filter-select">
+                <option>Latest</option>
+                <option>Price: High to Low</option>
+                <option>Stock: Low to High</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid">
+        <div class="product-admin-card" *ngFor="let p of filteredProducts">
+            <div class="card-image">
+                <img [src]="p.primary_image_url || 'assets/placeholder-product.jpg'" alt="{{ p.name }}">
+                <div class="stock-badge" [class.out]="p.stock_qty === 0">
+                    {{ p.stock_qty > 0 ? p.stock_qty + ' in stock' : 'Out of Stock' }}
+                </div>
+            </div>
+
+            <div class="card-content">
+                <div class="category">{{ getCategoryName(p.category_id) }}</div>
+                <h3 class="name">{{ p.name }}</h3>
+                <div class="price">LKR {{ p.price_lkr | number }}</div>
+
+                <div class="tags">
+                    <span class="tag gold" *ngIf="p.is_trending">Trending</span>
+                    <span class="tag green" *ngIf="p.is_new_arrival">New</span>
+                    <span class="tag purple" *ngIf="p.is_award_winner">Award</span>
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <div class="toggles">
+                    <button class="icon-toggle" [class.active]="p.is_trending" (click)="toggleTrending(p)"
+                        title="Toggle Trending">
+                        🔥
+                    </button>
+                    <!-- More quick toggles could go here -->
+                </div>
+                <div class="buttons">
+                    <button class="icon-btn edit" [routerLink]="['/admin/products', p.id, 'edit']">✏️</button>
+                    <button class="icon-btn delete" (click)="deleteProduct(p.id)">🗑️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-product-modal [isOpen]="isModalOpen" [product]="editingProduct" (close)="closeModal()"
+    (save)="saveProduct($event)">
+</app-product-modal>

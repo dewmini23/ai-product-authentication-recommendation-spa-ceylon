@@ -1,125 +1,132 @@
-<div class="login-container">
-    <div class="login-card">
-        <div class="brand-header">
-            <!-- Fixed Logo Path - Matching Login -->
-            <img src="assets/spa-ceylon-logo.png" alt="Spa Ceylon" class="brand-logo">
+<div class="auth-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="brand-header">
+                <!-- Fixed Logo Path - Matching Login -->
+                <img src="assets/spa-ceylon-logo.png" alt="Spa Ceylon" class="brand-logo">
 
-            <!-- Subtitle -->
-            <h2 class="tagline">AI-Powered Product Authenticity & Recommendations</h2>
-        </div>
+                <!-- Subtitle -->
+                <h2 class="tagline">AI-Powered Product Authenticity & Recommendations</h2>
+            </div>
 
-        <div class="login-header">
-            <h3>Create your account</h3>
-            <p class="subtitle">Join our sanctuary of wellness</p>
-        </div>
+            <div class="login-header">
+                <h3>Create your account</h3>
+                <p class="subtitle">Join our sanctuary of wellness</p>
+            </div>
 
-        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="login-form">
+            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="login-form">
 
-            <div class="signup-grid">
-                <!-- Row 1: Full Name & Age -->
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" formControlName="fullName" class="form-control"
-                        placeholder="Full Name" [class.is-invalid]="f['fullName'].touched && f['fullName'].invalid">
-                    <div *ngIf="f['fullName'].touched && f['fullName'].errors" class="invalid-feedback">
-                        <div *ngIf="f['fullName'].errors['required']">Required</div>
+                <div class="signup-grid">
+                    <!-- Row 1: Full Name & Age -->
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" formControlName="fullName" class="form-control"
+                            placeholder="Full Name" [class.is-invalid]="f['fullName'].touched && f['fullName'].invalid">
+                        <div *ngIf="f['fullName'].touched && f['fullName'].errors" class="invalid-feedback">
+                            <div *ngIf="f['fullName'].errors['required']">Required</div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="age">Age</label>
-                    <input type="text" id="age" formControlName="age" class="form-control" placeholder="Age"
-                        [class.is-invalid]="f['age'].touched && f['age'].invalid">
-                    <div *ngIf="f['age'].touched && f['age'].errors" class="invalid-feedback">
-                        <div *ngIf="f['age'].errors['required']">Required</div>
-                        <div *ngIf="f['age'].errors['pattern']">Numeric</div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="text" id="age" formControlName="age" class="form-control" placeholder="Age"
+                            [class.is-invalid]="f['age'].touched && f['age'].invalid">
+                        <div *ngIf="f['age'].touched && f['age'].errors" class="invalid-feedback">
+                            <div *ngIf="f['age'].errors['required']">Required</div>
+                            <div *ngIf="f['age'].errors['pattern']">Numeric</div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Row 2: Email & Gender -->
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" formControlName="email" class="form-control" placeholder="Email"
-                        [class.is-invalid]="f['email'].touched && f['email'].invalid">
-                    <div *ngIf="f['email'].touched && f['email'].errors" class="invalid-feedback">
-                        <div *ngIf="f['email'].errors['required']">Required</div>
-                        <div *ngIf="f['email'].errors['email']">Invalid</div>
+                    <!-- Row 2: Email & Gender -->
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" formControlName="email" class="form-control" placeholder="Email"
+                            [class.is-invalid]="f['email'].touched && f['email'].invalid">
+                        <div *ngIf="f['email'].touched && f['email'].errors" class="invalid-feedback">
+                            <div *ngIf="f['email'].errors['required']">Required</div>
+                            <div *ngIf="f['email'].errors['email']">Invalid</div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="gender">Gender</label>
-                    <select id="gender" formControlName="gender" class="form-control"
-                        [class.is-invalid]="f['gender'].touched && f['gender'].invalid">
-                        <option value="" disabled selected>Select</option>
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    <div *ngIf="f['gender'].touched && f['gender'].errors" class="invalid-feedback">
-                        <div *ngIf="f['gender'].errors['required']">Required</div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" formControlName="gender" class="form-control"
+                            [class.is-invalid]="f['gender'].touched && f['gender'].invalid">
+                            <option value="" disabled selected>Select</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div *ngIf="f['gender'].touched && f['gender'].errors" class="invalid-feedback">
+                            <div *ngIf="f['gender'].errors['required']">Required</div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Row 3: Skin Type (Full Width or standard, let's keep it in flow, maybe span 2 if we want it alone, but here we can let it sit in grid or span. Let's make it span 2 for symmetry or adjust.) -->
-                <!-- Ideally 2 col grid. If we have 5 items so far (Name, Age, Email, Gender, SkinType). 
+                    <!-- Row 3: Skin Type (Full Width or standard, let's keep it in flow, maybe span 2 if we want it alone, but here we can let it sit in grid or span. Let's make it span 2 for symmetry or adjust.) -->
+                    <!-- Ideally 2 col grid. If we have 5 items so far (Name, Age, Email, Gender, SkinType). 
                      Wait, Name, Age, Email, Gender is 4. SkinType is 5th. Pass, Confirm is 6, 7. 
                      Total 7 items. 
                      Let's make Skin Type span 2 cols to keep balance? Or put next to something?
                      Previous plan: "Row 3: Skin Type (Full width, optional)"
                 -->
-                <div class="form-group full-width">
-                    <label for="skinType">Skin Type (Optional)</label>
-                    <select id="skinType" formControlName="skinType" class="form-control">
-                        <option value="" selected>Select skin type</option>
-                        <option value="Normal">Normal</option>
-                        <option value="Dry">Dry</option>
-                        <option value="Oily">Oily</option>
-                        <option value="Combination">Combination</option>
-                        <option value="Sensitive">Sensitive</option>
-                    </select>
-                </div>
+                    <div class="form-group full-width">
+                        <label for="skinType">Skin Type (Optional)</label>
+                        <select id="skinType" formControlName="skinType" class="form-control">
+                            <option value="" selected>Select skin type</option>
+                            <option value="Normal">Normal</option>
+                            <option value="Dry">Dry</option>
+                            <option value="Oily">Oily</option>
+                            <option value="Combination">Combination</option>
+                            <option value="Sensitive">Sensitive</option>
+                        </select>
+                    </div>
 
-                <!-- Row 4: Password & Confirm -->
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" formControlName="password" class="form-control"
-                        placeholder="Password" [class.is-invalid]="f['password'].touched && f['password'].invalid">
-                    <div *ngIf="f['password'].touched && f['password'].errors" class="invalid-feedback">
-                        <div *ngIf="f['password'].errors['required']">Required</div>
-                        <div *ngIf="f['password'].errors['minlength']">Min 6 chars</div>
+                    <!-- Row 4: Password & Confirm -->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" formControlName="password" class="form-control"
+                            placeholder="Password" [class.is-invalid]="f['password'].touched && f['password'].invalid">
+                        <div *ngIf="f['password'].touched && f['password'].errors" class="invalid-feedback">
+                            <div *ngIf="f['password'].errors['required']">Required</div>
+                            <div *ngIf="f['password'].errors['minlength']">Min 6 chars</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm</label>
+                        <input type="password" id="confirmPassword" formControlName="confirmPassword"
+                            class="form-control" placeholder="Confirm"
+                            [class.is-invalid]="f['confirmPassword'].touched && (f['confirmPassword'].invalid || signupForm.errors?.['passwordMismatch'])">
+                        <div *ngIf="f['confirmPassword'].touched" class="invalid-feedback">
+                            <div *ngIf="f['confirmPassword'].errors?.['required']">Required</div>
+                            <div
+                                *ngIf="!f['confirmPassword'].errors?.['required'] && signupForm.errors?.['passwordMismatch']">
+                                Mismatch</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm</label>
-                    <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control"
-                        placeholder="Confirm"
-                        [class.is-invalid]="f['confirmPassword'].touched && (f['confirmPassword'].invalid || signupForm.errors?.['passwordMismatch'])">
-                    <div *ngIf="f['confirmPassword'].touched" class="invalid-feedback">
-                        <div *ngIf="f['confirmPassword'].errors?.['required']">Required</div>
-                        <div
-                            *ngIf="!f['confirmPassword'].errors?.['required'] && signupForm.errors?.['passwordMismatch']">
-                            Mismatch</div>
-                    </div>
+                <div *ngIf="successMessage" class="alert alert-success">
+                    {{ successMessage }}
                 </div>
+
+                <div *ngIf="errorMessage" class="alert alert-danger">
+                    {{ errorMessage }}
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block"
+                        [disabled]="signupForm.invalid || isLoading">
+                        <span *ngIf="isLoading">Creating Account...</span>
+                        <span *ngIf="!isLoading">Create Account</span>
+                    </button>
+                </div>
+            </form>
+
+            <div class="auth-links">
+                <span class="register-prompt">Already have an account? <a routerLink="/login">Sign in</a></span>
             </div>
 
-            <div *ngIf="errorMessage" class="alert alert-danger">
-                {{ errorMessage }}
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-block" [disabled]="signupForm.invalid || isLoading">
-                    <span *ngIf="isLoading">Creating Account...</span>
-                    <span *ngIf="!isLoading">Create Account</span>
-                </button>
-            </div>
-        </form>
-
-        <div class="auth-links">
-            <span class="register-prompt">Already have an account? <a routerLink="/login">Sign in</a></span>
         </div>
-
     </div>
 </div>

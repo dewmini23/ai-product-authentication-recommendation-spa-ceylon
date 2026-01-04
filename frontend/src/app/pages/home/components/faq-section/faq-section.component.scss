@@ -81,6 +81,11 @@ $bg-card: rgba(255, 255, 255, 0.03);
     display: flex;
     align-items: center;
     padding: 1.25rem 1.5rem;
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
+
     background: transparent;
     border: none;
     cursor: pointer;
@@ -143,6 +148,6 @@ $bg-card: rgba(255, 255, 255, 0.03);
     }
 
     @media (max-width: 768px) {
-        padding: 0 1.5rem 1.5rem 1.5rem;
+        padding: 0 1rem 1.5rem 1rem;
     }
 }

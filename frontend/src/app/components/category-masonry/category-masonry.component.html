@@ -10,6 +10,8 @@
 
             <!-- 1. Background Layers -->
             <div class="tile-bg">
+                <img [src]="cat.imageUrl" [alt]="cat.name" class="category-image">
+                <div class="image-overlay"></div>
                 <div class="noise-overlay"></div>
                 <div class="vignette-overlay"></div>
                 <div class="shine-sweep"></div>
@@ -51,12 +53,7 @@
                 </div>
             </div>
 
-            <!-- 2. Content Layer -->
-            <div class="tile-content">
-                <div class="centered-title">
-                    <h3>{{ cat.name }}</h3>
-                </div>
-            </div>
+            <!-- 2. Content Layer - Removed text overlay since images have labels -->
         </div>
     </div>
 </section>

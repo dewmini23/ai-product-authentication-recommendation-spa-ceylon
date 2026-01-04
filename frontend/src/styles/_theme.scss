@@ -1,17 +1,103 @@
 // _theme.scss
 
-// Colors - Spa Ceylon Luxury Palette
-$color-bg-dark: #0B2D26;      // Deep herbal green
+// ============================================
+// ANGULAR MATERIAL THEME SETUP (v15)
+// ============================================
+@use '@angular/material' as mat;
+
+// Include Material core styles (required)
+@include mat.core();
+
+// ============================================
+// SPA CEYLON CUSTOM THEME
+// ============================================
+
+// Define custom palette using Spa Ceylon colors
+$spa-ceylon-primary: mat.define-palette((50: #e8f5f1,
+            100: #c5e6dc,
+            200: #9fd6c5,
+            300: #79c5ae,
+            400: #5cb89c,
+            500: #3fac8b, // Base color - emerald green
+            600: #39a583,
+            700: #319b78,
+            800: #29926e,
+            900: #1b825b,
+            A100: #b8ffe5,
+            A200: #85ffd0,
+            A400: #52ffbb,
+            A700: #38ffb1,
+            contrast: (50: rgba(black, 0.87),
+                100: rgba(black, 0.87),
+                200: rgba(black, 0.87),
+                300: rgba(black, 0.87),
+                400: rgba(black, 0.87),
+                500: white,
+                600: white,
+                700: white,
+                800: white,
+                900: white,
+                A100: rgba(black, 0.87),
+                A200: rgba(black, 0.87),
+                A400: rgba(black, 0.87),
+                A700: rgba(black, 0.87),
+            )));
+
+$spa-ceylon-accent: mat.define-palette((50: #fdf6e8,
+            100: #fae9c5,
+            200: #f7da9f,
+            300: #f4cb79,
+            400: #f1c05c,
+            500: #C9A646, // Base color - gold
+            600: #c19d3f,
+            700: #b99337,
+            800: #b1892f,
+            900: #a47720,
+            A100: #fff9e6,
+            A200: #ffecb3,
+            A400: #ffdf80,
+            A700: #ffd966,
+            contrast: (50: rgba(black, 0.87),
+                100: rgba(black, 0.87),
+                200: rgba(black, 0.87),
+                300: rgba(black, 0.87),
+                400: rgba(black, 0.87),
+                500: rgba(black, 0.87),
+                600: rgba(black, 0.87),
+                700: white,
+                800: white,
+                900: white,
+                A100: rgba(black, 0.87),
+                A200: rgba(black, 0.87),
+                A400: rgba(black, 0.87),
+                A700: rgba(black, 0.87),
+            )));
+
+// Define the theme
+$spa-ceylon-theme: mat.define-dark-theme((color: (primary: $spa-ceylon-primary,
+                accent: $spa-ceylon-accent,
+            ),
+            typography: mat.define-typography-config(),
+            density: 0,
+        ));
+
+// Include theme styles for all components
+@include mat.all-component-themes($spa-ceylon-theme);
+
+// ============================================
+// CUSTOM COLOR VARIABLES (for app use)
+// ============================================
+$color-bg-dark: #0B2D26; // Deep herbal green
 $color-bg-gradient-start: #0B2D26;
 $color-bg-gradient-end: #0f1626; // Slightly darker/bluer for depth
 
 $color-accent-purple: #3E1F47; // Rich deep purple
 $color-accent-purple-light: #5a2e66;
 
-$color-accent-gold: #C9A646;   // Gold accent
+$color-accent-gold: #C9A646; // Gold accent
 $color-accent-gold-light: #e0be5a;
 
-$color-text-light: #F5F0E8;    // Off-white / Ivory
+$color-text-light: #F5F0E8; // Off-white / Ivory
 $color-text-muted: rgba(245, 240, 232, 0.7);
 
 $color-card-bg: rgba(15, 33, 30, 0.85); // Dark transparent background

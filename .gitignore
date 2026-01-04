@@ -3,3 +3,12 @@ dist/
 .angular/
 .env
 .DS_Store
+
+# Archives / exports
+*.rar
+*.zip
+*.tar.gz
+
+# Deliverables (if present)
+deliverables/
+
