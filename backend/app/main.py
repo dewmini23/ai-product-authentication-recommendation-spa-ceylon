@@ -19,6 +19,7 @@ app = FastAPI(title=settings.PROJECT_NAME)
 
 origins = [
     "http://localhost:4200",
+    "http://127.0.0.1:4200",
 ]
 
 app.add_middleware(
@@ -33,6 +34,40 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/api")
 app.include_router(api_router, prefix="/api")
 
+# Mount static directories for file uploads
+import os
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+
+BACKEND_DIR = Path(__file__).parent.parent  # points to backend/
+UPLOAD_DIR = BACKEND_DIR / "uploads" / "products"
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+app.mount("/uploads", StaticFiles(directory=str(BACKEND_DIR / "uploads")), name="uploads")
+
+# Register Tags Router
+from app.api.routers import tags
+app.include_router(tags.router, prefix="/api")
+
+# Register Recommendations Router
+from app.api.routers import recommendations
+app.include_router(recommendations.router, prefix="/api", tags=["recommendations"])
+
+# Register ML Router
+from app.api.routers import ml_routes
+app.include_router(ml_routes.router, prefix="/api/ml", tags=["machine_learning"])
+
+# Register Product Authentication Router (isolated — does not affect recommendation routes)
+from app.api.routers import product_authentication
+app.include_router(product_authentication.router, prefix="/api/authentication", tags=["product_authentication"])
+
+
+@app.on_event("startup")
+def load_ml_models():
+    """Load machine learning models into memory."""
+    from app.services.concern_classifier import concern_classifier
+    logger.info("Initializing ML models...")
+    concern_classifier.load_model()
 
 @app.on_event("startup")
 def test_database_connection():

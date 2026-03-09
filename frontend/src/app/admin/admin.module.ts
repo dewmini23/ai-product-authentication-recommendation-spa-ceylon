@@ -21,6 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
 import { AdminProductCreateComponent } from './pages/product-create/admin-product-create.component';
 import { CategoryPickerDialogComponent } from './components/category-picker-dialog/category-picker-dialog.component';
 
@@ -51,6 +52,7 @@ import { CategoryPickerDialogComponent } from './components/category-picker-dial
         MatDividerModule,
         ScrollingModule,
         MatDialogModule,
+        MatChipsModule,
         OverlayModule
     ]
 })

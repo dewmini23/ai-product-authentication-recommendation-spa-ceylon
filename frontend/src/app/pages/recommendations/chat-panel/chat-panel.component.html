@@ -1,0 +1,52 @@
+<div class="chat-container glass-panel">
+  <div class="chat-header">
+    <h3>Spa Ceylon Concierge</h3>
+  </div>
+
+  <div class="chat-messages" #chatScroll>
+    <div class="message-wrapper" *ngFor="let msg of messages; let i = index" [ngClass]="msg.sender">
+      <div class="bubble">
+        <p>{{ msg.text }}</p>
+      </div>
+
+      <!-- Quick start chips below first assistant message -->
+      <div class="quick-chips" *ngIf="i === 0 && messages.length === 1">
+        <button class="gold-chip" *ngFor="let chip of quickStartChips" (click)="onChipClick(chip)">
+          {{ chip }}
+        </button>
+      </div>
+
+      <!-- Display detected tags from ML below assistant message -->
+      <div class="detected-tags" *ngIf="msg.tags && msg.tags.length > 0">
+        <span class="muted-chip" *ngFor="let mTag of msg.tags">{{ mTag }}</span>
+      </div>
+    </div>
+
+    <!-- Typing Indicator -->
+    <div class="message-wrapper assistant" *ngIf="isTyping">
+      <div class="bubble typing">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="chat-input-area">
+    <input 
+      type="text" 
+      #chatInput 
+      placeholder="Type your concern here..." 
+      (input)="null"
+      (keyup.enter)="onSend(chatInput)"
+      [disabled]="isTyping"
+    />
+    <button class="send-btn" (click)="onSend(chatInput)" [disabled]="isTyping || !chatInput.value.trim()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </div>
+</div>

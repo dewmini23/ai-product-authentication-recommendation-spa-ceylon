@@ -28,14 +28,43 @@
 
             <!-- Right: Icons -->
             <div class="right-section">
-                <!-- User/Login -->
-                <a routerLink="/login" class="icon-btn" aria-label="Login">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </a>
+                <!-- User/Login / Account Dropdown -->
+                <ng-container *ngIf="!isLoggedIn(); else accountDropdown">
+                    <a routerLink="/login" class="icon-btn" aria-label="Login">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                </ng-container>
+                <ng-template #accountDropdown>
+                    <div class="account-menu-wrapper" (click)="toggleAccountDropdown()">
+                        <button class="icon-btn account-btn" aria-label="Account">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown panel -->
+                        <div class="account-dropdown-panel" *ngIf="isAccountOpen" (click)="$event.stopPropagation()">
+                            <div class="account-info">
+                                <span class="account-name">{{ getUserName() }}</span>
+                                <span class="account-role-badge" *ngIf="getUserRole() === 'ADMIN'">Admin</span>
+                            </div>
+                            <div class="account-links">
+                                <a routerLink="/profile" class="dropdown-item" (click)="closeAccountDropdown()">
+                                    <i class="fas fa-user-circle"></i> My Profile
+                                </a>
+                                <button class="dropdown-item text-danger" (click)="logout()">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
 
                 <!-- Cart -->
                 <button class="icon-btn" aria-label="Cart">

@@ -3,6 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { RecommendationsPageComponent } from './pages/recommendations/recommendations-page.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { AuthenticatePageComponent } from './pages/authenticate/authenticate-page.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -10,8 +14,9 @@ const routes: Routes = [
 
     // TODO: Create dedicated components for these features
     // These routes currently point to HomeComponent as placeholders
-    { path: 'authenticate', component: HomeComponent },  // Placeholder - Future: Product authentication page
-    { path: 'recommendations', component: HomeComponent },  // Placeholder - Future: Personalized recommendations
+    { path: 'authenticate', component: AuthenticatePageComponent },
+    { path: 'recommendations', component: RecommendationsPageComponent, canActivate: [AuthGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'shop', component: HomeComponent },  // Placeholder - Future: Product catalog/shop
     { path: 'award-winners', component: HomeComponent },  // Placeholder - Future: Award winners showcase
     { path: 'trending', component: HomeComponent },  // Placeholder - Future: Trending products

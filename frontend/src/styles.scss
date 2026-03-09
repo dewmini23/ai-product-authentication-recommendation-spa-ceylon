@@ -36,20 +36,8 @@ body {
 
 body {
     /* FULL LUXURY BACKGROUND */
-    /* Deep herbal green + dark teal + deep purple gradient */
+    /* Deep herbal green */
     background-color: #08241F;
-    background-image:
-        /* url('assets/mandala-static.svg'), */
-        linear-gradient(135deg, #08241F 0%, #0B3B36 40%, #1B1025 100%);
-
-    background-repeat: repeat, no-repeat;
-    background-size: 180px 180px, cover;
-    background-position: 0 0, center;
-    background-attachment: fixed;
-    /* Fixed wallpaper effect, NO scrolling, NO drifting */
-
-    /* No CSS animation for position - SVG is static */
-
     color: $color-text-light;
     font-family: 'Poppins', sans-serif;
 

@@ -8,3 +8,13 @@ python-dotenv
 python-multipart
 passlib[argon2]
 python-jose[cryptography]
+torch
+transformers
+scikit-learn
+
+# Product Authentication (new isolated feature)
+ultralytics
+easyocr
+rapidfuzz
+opencv-python-headless
+Pillow

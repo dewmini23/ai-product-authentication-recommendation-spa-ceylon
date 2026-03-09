@@ -22,6 +22,7 @@ from app.models.user import User
 from app.models.category import Category
 from app.models.product import Product
 from app.models.product_image import ProductImage
+from app.models.product_auth_reference import ProductAuthReference  # new table
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

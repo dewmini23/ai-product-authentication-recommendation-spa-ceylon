@@ -1,0 +1,37 @@
+<div class="products-grid-container">
+
+    <div class="empty-state glass-panel" *ngIf="products.length === 0">
+        <div class="empty-content">
+            <div class="icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none"
+                    stroke="url(#goldGradient)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                    class="empty-icon">
+                    <defs>
+                        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#F2D06B" />
+                            <stop offset="100%" stop-color="#C8A24A" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 22C12 22 20 18 20 12C20 6 12 2 12 2C12 2 4 6 4 12C4 18 12 22 12 22Z"></path>
+                    <line x1="12" y1="2" x2="12" y2="22"></line>
+                    <path d="M12 12c-3 0-6-3-6-3"></path>
+                    <path d="M12 12c3 0 6-3 6-3"></path>
+                </svg>
+                <div class="pulse-ring"></div>
+            </div>
+
+            <h3>Discover Your Matches</h3>
+            <p>Tell me about your skin, hair, or wellness concerns in the chat to receive personalized Spa Ceylon
+                recommendations tailored just for you.</p>
+        </div>
+    </div>
+
+    <div class="grid" *ngIf="products.length > 0">
+        <div class="product-wrapper" *ngFor="let item of products">
+            <app-product-card [product]="item.product" (quickView)="quickView.emit($event)"
+                (addToCart)="addToCart.emit($event)">
+            </app-product-card>
+        </div>
+    </div>
+
+</div>

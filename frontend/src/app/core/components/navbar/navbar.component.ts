@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-navbar',
@@ -9,6 +10,7 @@ export class NavbarComponent implements OnInit {
 
     isMenuOpen: boolean = false;
     isSearchOpen: boolean = false;
+    isAccountOpen: boolean = false;
 
     // Track active dropdown in mobile view
     activeMobileDropdown: string | null = null;
@@ -54,9 +56,19 @@ export class NavbarComponent implements OnInit {
         }
     ];
 
-    constructor() { }
+    constructor(
+        private authService: AuthService,
+        private eRef: ElementRef
+    ) { }
 
     ngOnInit(): void {
+    }
+
+    @HostListener('document:click', ['$event'])
+    clickout(event: Event) {
+        if (!this.eRef.nativeElement.contains(event.target)) {
+            this.isAccountOpen = false;
+        }
     }
 
     toggleMenu() {
@@ -75,4 +87,28 @@ export class NavbarComponent implements OnInit {
         }
     }
 
+    isLoggedIn(): boolean {
+        return this.authService.isLoggedIn();
+    }
+
+    getUserName(): string {
+        return this.authService.getFullName() || 'My Account';
+    }
+
+    getUserRole(): string {
+        return this.authService.getRole() || '';
+    }
+
+    toggleAccountDropdown() {
+        this.isAccountOpen = !this.isAccountOpen;
+    }
+
+    closeAccountDropdown() {
+        this.isAccountOpen = false;
+    }
+
+    logout() {
+        this.closeAccountDropdown();
+        this.authService.logout();
+    }
 }

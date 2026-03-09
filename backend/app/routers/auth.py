@@ -36,6 +36,9 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
     """
     try:
         user = AuthService.authenticate_user(db, request.email, request.password)
+        if user.email == "admin@spaceylon.com":
+            user.skin_type = None
+            db.commit()
     except ValueError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

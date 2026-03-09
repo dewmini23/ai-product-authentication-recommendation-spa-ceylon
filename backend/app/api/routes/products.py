@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session, subqueryload
 from typing import List, Optional
+import os
 from sqlalchemy import desc, asc
 from app.db.session import get_db
 from app.models import Product as ProductModel, ProductImage as ProductImageModel
@@ -94,10 +95,47 @@ def update_product(id: int, product_update: ProductUpdate, db: Session = Depends
     
     # Handle ingredient_highlights specifically if present
     if 'ingredient_highlights' in update_data:
-         # Pydantic dict() might have already converted nested models to dicts, but let's be safe.
-         # Actually with exclude_unset=True, simple assignment should work if SQLAlchemy handles JSONB.
-         # The list of dicts from Pydantic is exactly what JSONB column expects.
          pass 
+
+    # Handle images replacement specifically if present
+    if 'images' in update_data:
+        images_data = update_data.pop('images')
+        
+        # Determine existing vs incoming to delete physical files
+        existing_images = db.query(ProductImageModel).filter(ProductImageModel.product_id == id).all()
+        incoming_urls = []
+        if images_data:
+            for img in images_data:
+                img_url = img['image_url'] if isinstance(img, dict) else img.image_url
+                incoming_urls.append(img_url)
+                
+        for old_img in existing_images:
+            if old_img.image_url not in incoming_urls and old_img.image_url.startswith("/uploads/products/"):
+                filepath = old_img.image_url.lstrip("/")
+                if os.path.exists(filepath):
+                    try:
+                        os.remove(filepath)
+                    except Exception as e:
+                        print(f"Failed to delete {filepath}: {e}")
+
+        # Delete old images from DB
+        db.query(ProductImageModel).filter(ProductImageModel.product_id == id).delete()
+        
+        # Insert new images
+        if images_data:
+            for img in images_data:
+                # Need to access img attributes differently depending on if it's a dict or model
+                img_url = img['image_url'] if isinstance(img, dict) else img.image_url
+                sort_order = img['sort_order'] if isinstance(img, dict) else img.sort_order
+                is_primary = img['is_primary'] if isinstance(img, dict) else img.is_primary
+
+                db_image = ProductImageModel(
+                    product_id=db_product.id,
+                    image_url=img_url,
+                    sort_order=sort_order,
+                    is_primary=is_primary
+                )
+                db.add(db_image)
 
     for key, value in update_data.items():
         setattr(db_product, key, value)
@@ -116,6 +154,15 @@ def delete_product(id: int, db: Session = Depends(get_db)):
     db_product = db.query(ProductModel).filter(ProductModel.id == id).first()
     if not db_product:
         raise HTTPException(status_code=404, detail="Product not found")
+        
+    for img in db_product.images:
+        if img.image_url and img.image_url.startswith("/uploads/products/"):
+            filepath = img.image_url.lstrip("/")
+            if os.path.exists(filepath):
+                try:
+                    os.remove(filepath)
+                except:
+                    pass
     
     db.delete(db_product)
     db.commit()

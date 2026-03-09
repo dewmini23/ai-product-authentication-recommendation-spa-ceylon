@@ -1,0 +1,717 @@
+[
+  {
+    "id": "IR_BSG_250",
+    "name": "Island Rose Perfumed Bath & Shower Gel 250ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "ISLAND",
+      "ROSE",
+      "BATH",
+      "SHOWER",
+      "GEL",
+      "PERFUMED"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "UNAW_BS_200",
+    "name": "Chill on the Jungle Beaches of Ceylon – Unawatuna Body Spray 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AROMAVEDA"
+    ],
+    "label_keywords": [
+      "CHILL",
+      "JUNGLE",
+      "BEACHES",
+      "CEYLON",
+      "UNAWATUNA",
+      "BODY",
+      "SPRAY",
+      "AROMAVEDA",
+      "ESSENTIAL",
+      "OIL",
+      "BLENDED"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "AGE_REF_FACE_CREAM",
+    "name": "Age Refining Nourishing Facial Cream (size unknown on image)",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "AGE",
+      "REFINING",
+      "NOURISHING",
+      "FACIAL",
+      "CREAM"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "KESH_MASQUE_150",
+    "name": "Kesharaja Hair Treatment Masque 150ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "KESHARAJA",
+      "HAIR",
+      "TREATMENT",
+      "MASQUE",
+      "NOURISHES",
+      "TREATS",
+      "FORTIFIES"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "SAL_SAFF_FOAM_150",
+    "name": "Sal & Saffron Vitamin E Rich Facial Cleansing Foam 150ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "SAL",
+      "SAFFRON",
+      "VITAMIN",
+      "E",
+      "RICH",
+      "FACIAL",
+      "CLEANSING",
+      "FOAM"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "WHITE_MINT_FOAM_150",
+    "name": "White Mint Facial Cleansing Foam 150ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "WHITE",
+      "MINT",
+      "FACIAL",
+      "CLEANSING",
+      "FOAM"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "WJ_BODY_LOTION_250",
+    "name": "White Jasmine Day SPF15+ Body Lotion 250ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "WHITE",
+      "JASMINE",
+      "DAY",
+      "SPF15",
+      "BODY",
+      "LOTION",
+      "BRIGHTEN",
+      "PROTECT",
+      "SPF15+"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "FRANK_FACEWASH_MEN_150",
+    "name": "Frankincense Face Wash for Men 150ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "FRANKINCENSE",
+      "FACE",
+      "WASH",
+      "FOR",
+      "MEN"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "LOTUS_RAMB_FOAM_100",
+    "name": "Lotus & Rambutan Active Cell Extract + Vitamin B12 Facial Cleansing Foam 100ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "LOTUS",
+      "RAMBUTAN",
+      "FACIAL",
+      "CLEANSING",
+      "FOAM",
+      "ACTIVE",
+      "CELL",
+      "EXTRACT",
+      "VITAMIN",
+      "B12"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "TRUE_TURMERIC_POLISH_200G",
+    "name": "True Turmeric Vitamin C Glow Refining Body Polish 200g",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "TRUE",
+      "TURMERIC",
+      "VITAMIN",
+      "C",
+      "GLOW",
+      "REFINING",
+      "BODY",
+      "POLISH"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "UNAW_HBL_160",
+    "name": "Unawatuna Nourishing Hand & Body Lotion 160ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AROMAVEDA"
+    ],
+    "label_keywords": [
+      "UNAWATUNA",
+      "NOURISHING",
+      "HAND",
+      "BODY",
+      "LOTION",
+      "AROMAVEDA"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "NIGHT_JASMINE_BS_200",
+    "name": "Night Jasmine Perfumed Body Spray 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AROMAVEDA"
+    ],
+    "label_keywords": [
+      "NIGHT",
+      "JASMINE",
+      "PERFUMED",
+      "BODY",
+      "SPRAY",
+      "AROMAVEDA",
+      "ESSENTIAL",
+      "OIL",
+      "BLENDED"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "BWL_BS_200",
+    "name": "Blue Water Lily Perfumed Body Spray 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AROMAVEDA"
+    ],
+    "label_keywords": [
+      "BLUE",
+      "WATER",
+      "LILY",
+      "PERFUMED",
+      "BODY",
+      "SPRAY",
+      "AROMAVEDA",
+      "ESSENTIAL",
+      "OIL",
+      "BLENDED"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "MIRISSA_BS_200",
+    "name": "Explore the Secret Beaches of Ceylon – Mirissa Body Spray 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AROMAVEDA"
+    ],
+    "label_keywords": [
+      "EXPLORE",
+      "SECRET",
+      "BEACHES",
+      "CEYLON",
+      "MIRISSA",
+      "BODY",
+      "SPRAY",
+      "AROMAVEDA",
+      "ESSENTIAL",
+      "OIL",
+      "BLENDED"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "IR_BS_200",
+    "name": "Island Rose Perfumed Body Spray 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AROMAVEDA"
+    ],
+    "label_keywords": [
+      "ISLAND",
+      "ROSE",
+      "PERFUMED",
+      "BODY",
+      "SPRAY",
+      "AROMAVEDA",
+      "ESSENTIAL",
+      "OIL",
+      "BLENDED"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "KANDYAN_ROSE_BS_200",
+    "name": "Kandyan Rose Perfumed Body Spray 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AROMAVEDA"
+    ],
+    "label_keywords": [
+      "KANDYAN",
+      "ROSE",
+      "PERFUMED",
+      "BODY",
+      "SPRAY",
+      "AROMAVEDA",
+      "ESSENTIAL",
+      "OIL",
+      "BLENDED"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "NILAVELI_BS_200",
+    "name": "Glow in the Moonlit Beaches of Ceylon – Nilaveli Perfumed Body Spray 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AROMAVEDA"
+    ],
+    "label_keywords": [
+      "GLOW",
+      "MOONLIT",
+      "BEACHES",
+      "CEYLON",
+      "NILAVELI",
+      "PERFUMED",
+      "BODY",
+      "SPRAY",
+      "AROMAVEDA",
+      "ESSENTIAL",
+      "OIL",
+      "BLENDED"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ROYAL_LOTUS_BS_200",
+    "name": "Royal Lotus Perfumed Body Spray 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AROMAVEDA"
+    ],
+    "label_keywords": [
+      "ROYAL",
+      "LOTUS",
+      "PERFUMED",
+      "BODY",
+      "SPRAY",
+      "AROMAVEDA",
+      "ESSENTIAL",
+      "OIL",
+      "BLENDED"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "HIKKADUWA_BS_200",
+    "name": "Dive into the Coral Beaches of Ceylon – Hikkaduwa Body Spray 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AROMAVEDA"
+    ],
+    "label_keywords": [
+      "DIVE",
+      "CORAL",
+      "BEACHES",
+      "CEYLON",
+      "HIKKADUWA",
+      "BODY",
+      "SPRAY",
+      "AROMAVEDA",
+      "ESSENTIAL",
+      "OIL",
+      "BLENDED"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "FRANK_FACE_PROTECTOR_MEN_30",
+    "name": "Frankincense Face Protector Day SPF for Men 30ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "FRANKINCENSE",
+      "FACE",
+      "PROTECTOR",
+      "DAY",
+      "SPF",
+      "FOR",
+      "MEN"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "MARGOSA_MINT_HAIR_CLEANSER_200",
+    "name": "Margosa Mint Medicated Hair Cleanser 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "MARGOSA",
+      "MINT",
+      "MEDICATED",
+      "HAIR",
+      "CLEANSER",
+      "DANDRUFF",
+      "SCALP"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "NEEM_TT_MATTIFYING_DAY_PROTECTOR_SPF5_100G",
+    "name": "Neem & Tea Tree Mattifying All-Day Protector SPF 5 100g",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "NEEM",
+      "TEA",
+      "TREE",
+      "MATTIFYING",
+      "ALL",
+      "DAY",
+      "PROTECTOR",
+      "SPF",
+      "5"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "NEELYADI_HAIR_OIL_100",
+    "name": "Neelyadi Medicated Scalp & Hair Treatment Oil 100ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "NEELYADI",
+      "MEDICATED",
+      "SCALP",
+      "HAIR",
+      "TREATMENT",
+      "OIL",
+      "DANDRUFF",
+      "SCALP"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "NEROLI_JASMINE_HBL_100",
+    "name": "Neroli Jasmine Hand & Body Lotion 100ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "NEROLI",
+      "JASMINE",
+      "HAND",
+      "BODY",
+      "LOTION"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "VIRGIN_COCONUT_CREAM_FACEWASH_150",
+    "name": "Virgin Coconut Cream Facial Wash 150ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "VIRGIN",
+      "COCONUT",
+      "CREAM",
+      "FACIAL",
+      "WASH"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "CARDAMOM_ROSE_BODY_PILLOW_MIST_100",
+    "name": "Cardamom Rose Body & Pillow Mist 100ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "CARDAMOM",
+      "ROSE",
+      "BODY",
+      "PILLOW",
+      "MIST"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "KESH_CONDITIONER_200",
+    "name": "Kesharaja Nourishing Hair Conditioner 200ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "KESHARAJA",
+      "NOURISHING",
+      "HAIR",
+      "CONDITIONER",
+      "NOURISHES",
+      "TREATS",
+      "FORTIFIES"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "SAL_SAFF_EYEZONE_CONC_20",
+    "name": "Sal & Saffron Vitamin E Rich Eye Zone Day & Night Treatment Concentrate 20ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "SAL",
+      "SAFFRON",
+      "VITAMIN",
+      "E",
+      "RICH",
+      "EYE",
+      "ZONE",
+      "DAY",
+      "NIGHT",
+      "TREATMENT",
+      "CONCENTRATE"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "VIRGIN_COCONUT_HAIR_OIL_100",
+    "name": "Virgin Coconut Hair Nourishing Oil 100ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "VIRGIN",
+      "COCONUT",
+      "HAIR",
+      "NOURISHING",
+      "OIL",
+      "HYDRATES",
+      "SMOOTHENS",
+      "CALMS",
+      "FRIZZ"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "MORINGA_DISCOLOUR_SERUM_30",
+    "name": "Skin-Balance Moringa Herb Discolouration Treatment Serum 30ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "SKIN",
+      "BALANCE",
+      "MORINGA",
+      "HERB",
+      "DISCOLOURATION",
+      "TREATMENT",
+      "SERUM"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "CARDAMOM_ROSE_HAND_CREAM",
+    "name": "Cardamom Rose Intensive Hand Cream (size unknown on image)",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "CARDAMOM",
+      "ROSE",
+      "INTENSIVE",
+      "HAND",
+      "CREAM"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "NEEM_TT_OVERNIGHT_MASQUE_30",
+    "name": "Neem & Tea Tree Overnight Treatment Masque 30ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "NEEM",
+      "TEA",
+      "TREE",
+      "OVERNIGHT",
+      "TREATMENT",
+      "MASQUE"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "WHITE_RICE_DAY_PROTECTOR_50G",
+    "name": "White Rice Nourishing All-Day Protector 50g",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "WHITE",
+      "RICE",
+      "NOURISHING",
+      "ALL",
+      "DAY",
+      "PROTECTOR"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "WHITE_RICE_UNDEREYE_20_PURPLE",
+    "name": "White Rice Firming Peptide Action Intensive Under-Eye Treatment Concentrate (size unknown on image)",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "WHITE",
+      "RICE",
+      "FIRMING",
+      "PEPTIDE",
+      "ACTION",
+      "INTENSIVE",
+      "UNDER",
+      "EYE",
+      "TREATMENT",
+      "CONCENTRATE",
+      "ADVANCED",
+      "FORMULA"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "WHITE_RICE_UNDEREYE_20_GOLD",
+    "name": "White Rice Intensive Under-Eye Treatment Concentrate (gold bottle) (size unknown on image)",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "WHITE",
+      "RICE",
+      "INTENSIVE",
+      "UNDER",
+      "EYE",
+      "TREATMENT",
+      "CONCENTRATE"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "WHITE_RICE_UNDEREYE_20",
+    "name": "White Rice Intensive Under-Eye Treatment Concentrate 20ml",
+    "brand_keywords": [
+      "SPA",
+      "CEYLON",
+      "AYURVEDA"
+    ],
+    "label_keywords": [
+      "WHITE",
+      "RICE",
+      "INTENSIVE",
+      "UNDER",
+      "EYE",
+      "TREATMENT",
+      "CONCENTRATE"
+    ],
+    "is_active": true
+  }
+]

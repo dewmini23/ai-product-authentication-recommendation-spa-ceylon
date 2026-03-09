@@ -18,6 +18,11 @@ import { CategoryMasonryComponent } from './components/category-masonry/category
 import { ReviewsSectionComponent } from './pages/home/components/reviews-section/reviews-section.component';
 import { FaqSectionComponent } from './pages/home/components/faq-section/faq-section.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { RecommendationsPageComponent } from './pages/recommendations/recommendations-page.component';
+import { ChatPanelComponent } from './pages/recommendations/chat-panel/chat-panel.component';
+import { ProductsGridComponent } from './pages/recommendations/products-grid/products-grid.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { AuthenticatePageComponent } from './pages/authenticate/authenticate-page.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +36,12 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
         CategoryMasonryComponent,
         ReviewsSectionComponent,
         FaqSectionComponent,
-        ProductDetailComponent
+        ProductDetailComponent,
+        RecommendationsPageComponent,
+        ChatPanelComponent,
+        ProductsGridComponent,
+        ProfileComponent,
+        AuthenticatePageComponent
     ],
     imports: [
         BrowserModule,

@@ -36,13 +36,13 @@
             <input type="text" class="search-input" [formControl]="searchCtrl" (keydown.enter)="onSearchEnter()"
                 placeholder="Search products...">
 
-            <select class="filter-select" [(ngModel)]="selectedCategory" (change)="applyFilters()">
+            <select class="filter-select" [value]="selectedCategory" (change)="onCategoryChange($event)">
                 <option value="All">All Categories</option>
                 <option *ngFor="let cat of categories" [value]="cat.name">{{ cat.name }}</option>
             </select>
 
             <label class="toggle-filter">
-                <input type="checkbox" [(ngModel)]="showTrendingOnly" (change)="applyFilters()">
+                <input type="checkbox" [checked]="showTrendingOnly" (change)="onTrendingChange($event)">
                 <span>Trending Only</span>
             </label>
         </div>
@@ -60,7 +60,7 @@
     <div class="product-grid">
         <div class="product-admin-card" *ngFor="let p of filteredProducts">
             <div class="card-image">
-                <img [src]="p.primary_image_url || 'assets/placeholder-product.jpg'" alt="{{ p.name }}">
+                <img [src]="p.primary_image_url || 'assets/images/placeholder-product.jpg'" alt="{{ p.name }}">
                 <div class="stock-badge" [class.out]="p.stock_qty === 0">
                     {{ p.stock_qty > 0 ? p.stock_qty + ' in stock' : 'Out of Stock' }}
                 </div>
@@ -69,7 +69,7 @@
             <div class="card-content">
                 <div class="category">{{ getCategoryName(p.category_id) }}</div>
                 <h3 class="name">{{ p.name }}</h3>
-                <div class="price">LKR {{ p.price_lkr | number }}</div>
+                <div class="price">LKR {{ p.price_lkr }}</div>
 
                 <div class="tags">
                     <span class="tag gold" *ngIf="p.is_trending">Trending</span>
@@ -87,14 +87,10 @@
                     <!-- More quick toggles could go here -->
                 </div>
                 <div class="buttons">
-                    <button class="icon-btn edit" [routerLink]="['/admin/products', p.id, 'edit']">✏️</button>
+                    <button class="icon-btn edit" (click)="editProduct(p.id)">✏️</button>
                     <button class="icon-btn delete" (click)="deleteProduct(p.id)">🗑️</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<app-product-modal [isOpen]="isModalOpen" [product]="editingProduct" (close)="closeModal()"
-    (save)="saveProduct($event)">
-</app-product-modal>

@@ -76,12 +76,11 @@ import { Product } from '../../../../core/models/product.model';
     .image-container {
       position: relative;
       width: 100%;
-      height: 260px; /* Desktop Fixed Height */
+      aspect-ratio: 1 / 1; /* Square — industry standard for product cards */
       background: #0a1f1b;
       overflow: hidden;
 
       @media (max-width: 480px) {
-          height: auto;
           aspect-ratio: 1 / 1;
       }
 

@@ -66,9 +66,31 @@ export class ProductService {
      * Handles field name differences between backend and frontend
      */
     private mapToUIProduct(backendProduct: any): Product {
+        let resolvedPrimary = backendProduct.primary_image_url;
+        if (resolvedPrimary && resolvedPrimary.startsWith('/uploads/')) {
+            resolvedPrimary = environment.apiBaseUrl + resolvedPrimary;
+        }
+
+        // Also map individual images array if present
+        let mappedImages = backendProduct.images;
+        if (mappedImages && Array.isArray(mappedImages)) {
+            mappedImages = mappedImages.map((img: any) => {
+                if (typeof img === 'string' && img.startsWith('/uploads/')) {
+                    return environment.apiBaseUrl + img;
+                } else if (img && img.image_url && img.image_url.startsWith('/uploads/')) {
+                    return { ...img, image_url: environment.apiBaseUrl + img.image_url };
+                }
+                return img;
+            });
+        }
+
+        let imageUrl = resolvedPrimary || backendProduct.imageUrl || '';
+
         return {
             ...backendProduct,
-            imageUrl: backendProduct.primary_image_url || backendProduct.imageUrl || '',
+            primary_image_url: resolvedPrimary,
+            images: mappedImages,
+            imageUrl: imageUrl,
             price: backendProduct.price_lkr || backendProduct.price || 0,
             isVerified: true,
             isAwardWinner: backendProduct.isAwardWinner || backendProduct.is_award_winner || false

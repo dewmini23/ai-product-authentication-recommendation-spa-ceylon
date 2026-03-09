@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,6 +9,8 @@ import { ProductAdminService } from '../../services/product-admin.service';
 import { AdminProduct } from '../../models/admin-product.model';
 import { ProductCreateRequest } from '../../models/product-api.model';
 import { AdminCategoryService } from '../../services/admin-category.service';
+import { TagService, Tag } from '../../services/tag.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-admin-product-create',
@@ -19,6 +23,11 @@ export class AdminProductCreateComponent implements OnInit, AfterViewInit, OnDes
 
     productForm!: FormGroup;
     isLoading = false;
+    formSubmitted = false;
+    categories$: Observable<{ id: number, name: string }[]>;
+
+    pendingUploads: File[] = [];
+
     private scrollListener?: () => void;
 
     categories: { id: number, name: string }[] = [];
@@ -31,15 +40,31 @@ export class AdminProductCreateComponent implements OnInit, AfterViewInit, OnDes
         images: false
     };
 
-    formSubmitted = false;
+    // Tags State
+    tags: Tag[] = [];
+    availableSkinTypes: Tag[] = [];
+    availableTags: Tag[] = [];
+    newTagInput = '';
+    newTagTypeInput: 'face' | 'hair' | 'body' | 'mind' | 'perfume' | 'general' = 'face';
+
+    get concernTags(): Tag[] {
+        return this.tags.filter(t => t.tag_type !== 'skin_type');
+    }
+
+    get skinTypeTags(): Tag[] {
+        return this.tags.filter(t => t.tag_type === 'skin_type');
+    }
 
     constructor(
         private fb: FormBuilder,
         private router: Router,
         private productService: ProductAdminService,
         private snackBar: MatSnackBar,
-        private categoryService: AdminCategoryService
+        private categoryService: AdminCategoryService,
+        private tagService: TagService,
+        private http: HttpClient
     ) {
+        this.categories$ = this.categoryService.getCategories();
     }
 
     ngOnInit(): void {
@@ -47,9 +72,12 @@ export class AdminProductCreateComponent implements OnInit, AfterViewInit, OnDes
         this.setupChecklistListener();
 
         // Load categories from service
-        this.categoryService.getCategories().subscribe(cats => {
+        this.categories$.subscribe(cats => {
             this.categories = cats;
         });
+
+        this.loadSkinTypes();
+        this.loadAvailableTags(this.newTagTypeInput);
 
         // Keep selectedCategoryName in sync with form value
         this.productForm.get('category_id')?.valueChanges.subscribe((id) => {
@@ -77,6 +105,85 @@ export class AdminProductCreateComponent implements OnInit, AfterViewInit, OnDes
         if (contentArea && this.scrollListener) {
             contentArea.removeEventListener('scroll', this.scrollListener);
         }
+    }
+
+    // --- Tags Methods ---
+
+    addTag(name: string, type: any = this.newTagTypeInput) {
+        let trimmed = name?.trim().toLowerCase();
+        if (!trimmed) return;
+
+        // Check duplicate
+        if (this.tags.some(t => t.name.toLowerCase() === trimmed)) {
+            return;
+        }
+
+        // Add simplified tag object
+        this.tags.push({ name: trimmed, tag_type: type });
+        this.newTagInput = '';
+    }
+
+    onTagTypeChange(newType: string) {
+        // Clear all selected concern tags, retaining only skin types
+        this.tags = this.tags.filter(t => t.tag_type === 'skin_type');
+        this.newTagInput = '';
+        this.loadAvailableTags(newType);
+    }
+
+    loadAvailableTags(type: string) {
+        this.tagService.getTags(type).subscribe({
+            next: (tags) => this.availableTags = tags,
+            error: (err) => console.error('Failed to load available tags', err)
+        });
+    }
+
+    loadSkinTypes() {
+        this.tagService.getTags('skin_type').subscribe({
+            next: (tags) => this.availableSkinTypes = tags,
+            error: (err) => console.error('Failed to load skin types', err)
+        });
+    }
+
+    removeTag(tag: Tag) {
+        const index = this.tags.indexOf(tag);
+        if (index > -1) {
+            this.tags.splice(index, 1);
+        }
+    }
+
+    toggleSkinType(skinTypeTag: Tag) {
+        const index = this.tags.findIndex(t => t.name === skinTypeTag.name && t.tag_type === 'skin_type');
+        if (index > -1) {
+            this.tags.splice(index, 1);
+        } else {
+            this.tags.push({ name: skinTypeTag.name, tag_type: 'skin_type' });
+        }
+    }
+
+    isSkinTypeSelected(name: string): boolean {
+        return this.tags.some(t => t.name === name && t.tag_type === 'skin_type');
+    }
+
+    formatTagName(name: string): string {
+        if (!name) return '';
+
+        const overrides: { [key: string]: string } = {
+            'marks_blemishes': 'Marks & Blemishes',
+            'pigmentation_discoloration': 'Pigmentation & Discoloration',
+            'fine_lines_wrinkles': 'Fine Lines & Wrinkles',
+            'under_eye_darkness': 'Under Eye Darkness',
+            'dryness_relief': 'Dryness Relief',
+            'dandruff_scalp': 'Dandruff & Scalp',
+            'oily_flat_dull': 'Oily, Flat & Dull'
+        };
+
+        if (overrides[name]) {
+            return overrides[name];
+        }
+
+        return name.split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
     }
 
     // Accessors
@@ -123,7 +230,9 @@ export class AdminProductCreateComponent implements OnInit, AfterViewInit, OnDes
     setupChecklistListener() {
         this.productForm.valueChanges.subscribe(val => {
             this.checklist.description = (val.description && val.description.length >= 20);
-            this.checklist.images = (this.images.length > 0);
+            // Count both already-uploaded URLs and pending file uploads
+            const nonBlobImages = (val.images || []).filter((u: string) => u && !u.startsWith('blob:')).length;
+            this.checklist.images = (nonBlobImages + this.pendingUploads.length) > 0;
         });
     }
 
@@ -151,26 +260,42 @@ export class AdminProductCreateComponent implements OnInit, AfterViewInit, OnDes
         if (event.target.files && event.target.files.length) {
             const files = event.target.files;
 
-            // Convert to Base64
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                const reader = new FileReader();
-                reader.onload = (e: any) => {
-                    const result = e.target.result; // Base64 string
-                    this.images.push(this.fb.control(result, Validators.required));
-                };
-                reader.readAsDataURL(file);
+                // Keep track of the raw file to upload later
+                this.pendingUploads.push(file);
+
+                // Purely visual preview - NOT base64
+                const objectUrl = URL.createObjectURL(file);
+                this.images.push(this.fb.control(objectUrl, Validators.required));
             }
+
+            // Clear input
+            event.target.value = null;
         }
     }
 
     removeImage(index: number) {
+        const urlAtIndex = this.images.at(index)?.value;
+        if (urlAtIndex && urlAtIndex.startsWith('blob:')) {
+            // Count how many blob: urls appear before this index to find the pendingUploads index
+            let blobCount = 0;
+            for (let i = 0; i < index; i++) {
+                if (this.images.at(i)?.value?.startsWith('blob:')) blobCount++;
+            }
+            if (blobCount < this.pendingUploads.length) {
+                URL.revokeObjectURL(urlAtIndex); // Free memory
+                this.pendingUploads.splice(blobCount, 1);
+            }
+        }
         this.images.removeAt(index);
     }
 
 
     onImgError(event: any) {
-        event.target.src = 'assets/placeholder-product.jpg';
+        if (!event.target.src.includes('assets/images/placeholder-product.jpg')) {
+            event.target.src = 'assets/images/placeholder-product.jpg';
+        }
     }
 
 
@@ -230,19 +355,71 @@ export class AdminProductCreateComponent implements OnInit, AfterViewInit, OnDes
         const payload = this.buildProductPayload();
 
         this.productService.createProduct(payload).subscribe({
-            next: (response) => {
-                this.isLoading = false;
+            next: (response: any) => {
                 console.log('✅ Product Created:', response);
-                this.snackBar.open('Product Published Live!', 'Close', { duration: 3000 });
-                this.router.navigate(['/admin/products']);
+                const newProductId = response.id; // Extract newly created product ID
+
+                // Next: Handle sequential uploads
+                if (this.pendingUploads.length > 0) {
+                    this.uploadPendingFiles(newProductId, () => this.syncTagsAndFinish(newProductId));
+                } else {
+                    this.syncTagsAndFinish(newProductId);
+                }
             },
             error: (error: any) => {
                 this.isLoading = false;
                 console.error('❌ Error creating product:', error);
                 const message = error.error?.detail || error.message || 'Failed to create product';
-                this.snackBar.open(`Error: ${message}`, 'Close', { duration: 5000 });
+                this.snackBar.open(`Error: ${message} `, 'Close', { duration: 5000 });
             }
         });
+    }
+
+    private uploadPendingFiles(productId: number, callback: () => void) {
+        let uploadsCompleted = 0;
+        let uploadsFailed = 0;
+        const totalUploads = this.pendingUploads.length;
+
+        this.pendingUploads.forEach(file => {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            this.http.post<any[]>(`${environment.apiBaseUrl}/api/products/${productId}/images/upload`, formData).subscribe({
+                next: () => {
+                    uploadsCompleted++;
+                    if (uploadsCompleted + uploadsFailed === totalUploads) callback();
+                },
+                error: (err) => {
+                    console.error('File upload failed', err);
+                    uploadsFailed++;
+                    if (uploadsCompleted + uploadsFailed === totalUploads) callback();
+                }
+            });
+        });
+    }
+
+    private syncTagsAndFinish(productId: number) {
+        if (this.tags.length > 0 && productId) {
+            const payload = { tags: this.tags.map(t => ({ name: t.name, tag_type: t.tag_type })) };
+            this.tagService.replaceProductTags(productId, payload).subscribe({
+                next: () => {
+                    this.isLoading = false;
+                    this.snackBar.open('Product and Tags Published Live!', 'Close', { duration: 3000 });
+                    this.router.navigate(['/admin/products']);
+                },
+                error: (err: any) => {
+                    this.isLoading = false;
+                    console.error('❌ Error saving tags:', err);
+                    const msg = err.error?.detail || err.message || 'Product created but failed to save tags';
+                    this.snackBar.open(`Error: ${msg}. Please edit product to add tags.`, 'Close', { duration: 5000 });
+                    this.router.navigate(['/admin/products']);
+                }
+            });
+        } else {
+            this.isLoading = false;
+            this.snackBar.open('Product Published Live!', 'Close', { duration: 3000 });
+            this.router.navigate(['/admin/products']);
+        }
     }
 
     // --- Payload Mapper ---
@@ -261,14 +438,15 @@ export class AdminProductCreateComponent implements OnInit, AfterViewInit, OnDes
             return trimmed.length > 0 ? trimmed : undefined;
         };
 
-        // Convert images FormArray to backend format
+        // Filter out blobs. ONLY send hardcoded legacy HTTP links to the first create router.
+        // Blobs indicate the user is uploading a physical file, which is fired via multipart form in step 2.
         const images = (formValue.images || [])
             .map((url: string, index: number) => ({
                 image_url: url?.trim() || '',
                 sort_order: index,
                 is_primary: index === 0
             }))
-            .filter((img: any) => img.image_url.length > 0);
+            .filter((img: any) => img.image_url.length > 0 && !img.image_url.startsWith('blob:'));
 
         // Filter out empty ingredient highlights
         const ingredientHighlights = (formValue.ingredient_highlights || [])

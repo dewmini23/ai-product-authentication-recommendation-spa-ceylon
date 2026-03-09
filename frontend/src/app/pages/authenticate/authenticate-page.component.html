@@ -1,0 +1,135 @@
+<section class="auth-page">
+
+    <!-- ── Header ───────────────────────────────────────────────────────────── -->
+    <div class="page-header">
+        <button class="back-btn" (click)="goHome()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            Back to Home
+        </button>
+        <div class="header-eyebrow">Spa Ceylon &middot; Authenticity</div>
+        <div class="header-text">
+            <h1 class="page-title">Product Authentication</h1>
+            <p class="page-subtitle">
+                Upload a clear photo of your Spa Ceylon product label to instantly verify its authenticity.
+            </p>
+        </div>
+        <div class="header-ornament">
+            <span></span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                <polygon points="6,0 7.5,4.5 12,6 7.5,7.5 6,12 4.5,7.5 0,6 4.5,4.5" />
+            </svg>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="page-body">
+
+        <!-- ── Upload Card ───────────────────────────────────────────────────── -->
+        <div class="upload-card">
+
+            <label class="drop-zone" [class.has-preview]="previewUrl" for="fileInput">
+                <img *ngIf="previewUrl" [src]="previewUrl" alt="Selected product" class="preview-img" />
+                <div *ngIf="!previewUrl" class="drop-hint">
+                    <div class="drop-icon-ring">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                    </div>
+                    <span class="drop-hint-text">Tap to choose a photo</span>
+                    <span class="drop-hint-sub">JPG &middot; PNG &middot; WebP</span>
+                </div>
+            </label>
+            <input id="fileInput" type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+
+            <div *ngIf="selectedFile" class="file-info">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <span class="file-name">{{ selectedFile.name }}</span>
+                <span class="file-size">{{ fileSizeLabel }}</span>
+            </div>
+
+            <div class="action-row">
+                <button class="btn-verify" [disabled]="!selectedFile || isLoading" (click)="verify()">
+                    <span *ngIf="!isLoading">Verify Product</span>
+                    <span *ngIf="isLoading" class="spinner-row">
+                        <span class="spinner"></span> Verifying…
+                    </span>
+                </button>
+                <button *ngIf="selectedFile || authResult" class="btn-reset" (click)="reset()">
+                    Try Another Image
+                </button>
+            </div>
+
+            <div *ngIf="errorMessage" class="error-banner">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                {{ errorMessage }}
+            </div>
+        </div>
+
+        <!-- ── Result ────────────────────────────────────────────────────────── -->
+        <div *ngIf="authResult" #resultCard class="result-wrapper" [ngClass]="authResult.status">
+
+            <!-- 1. Customer Summary Card ─────────────────────────────────────── -->
+            <div class="summary-card" [ngClass]="authResult.status">
+
+                <div class="summary-top">
+                    <div class="status-icon" [ngSwitch]="authResult.status">
+                        <!-- Verified: elegant gold ring + checkmark -->
+                        <svg *ngSwitchCase="'verified'" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="#d4af37" stroke-width="1.5"
+                                fill="rgba(212,175,55,0.08)" />
+                            <polyline points="14,25 21,32 34,17" stroke="#d4af37" stroke-width="2.2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <!-- Unable to verify: soft amber camera -->
+                        <svg *ngSwitchCase="'unable_to_verify'" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="#c8971a" stroke-width="1.5"
+                                fill="rgba(200,151,26,0.08)" />
+                            <path
+                                d="M17 30h14a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-2l-2-3h-6l-2 3h-2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2z"
+                                stroke="#c8971a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="24" cy="24" r="3" stroke="#c8971a" stroke-width="1.7" />
+                        </svg>
+                        <!-- Suspected counterfeit: muted red triangle -->
+                        <svg *ngSwitchCase="'suspected_counterfeit'" width="48" height="48" viewBox="0 0 48 48"
+                            fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="#c0504a" stroke-width="1.5"
+                                fill="rgba(192,80,74,0.08)" />
+                            <path d="M24 17v9" stroke="#c0504a" stroke-width="2.2" stroke-linecap="round" />
+                            <circle cx="24" cy="31" r="1.4" fill="#c0504a" />
+                        </svg>
+                    </div>
+                    <div class="status-text">
+                        <span class="status-badge" [ngClass]="authResult.status">{{ statusLabel }}</span>
+                        <div class="score-row">
+                            <span class="score-number">{{ authResult.score | number:'1.0-1' }}<span class="score-denom">
+                                    / 100</span></span>
+                            <span class="confidence-label" [ngClass]="confidenceTier">{{ confidenceLabel }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="friendly-message">{{ friendlyMessage }}</p>
+
+                <div class="next-steps">
+                    <div class="next-steps-label">What to do next</div>
+                    <ul>
+                        <li *ngFor="let step of nextSteps">{{ step }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div><!-- /result-wrapper -->
+
+    </div><!-- /page-body -->
+</section>

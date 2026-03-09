@@ -29,3 +29,11 @@ coverage/
 *.egg-info/
 dist/
 build/
+
+*.log
+
+# ML model weights and tokenizer files (too large for git)
+ml_models/
+
+# Runtime image uploads
+uploads/

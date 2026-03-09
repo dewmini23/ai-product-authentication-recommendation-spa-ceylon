@@ -141,6 +141,83 @@
                     </div>
                 </mat-tab>
 
+                <!-- TAB: TAGS (New) -->
+                <mat-tab label="Tags">
+                    <div class="tab-content">
+                        <p class="section-desc">Manage product tags for search and filtering.</p>
+
+                        <!-- Actions -->
+                        <div class="tag-actions"
+                            style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+
+                            <mat-form-field appearance="outline" style="min-width: 150px;">
+                                <mat-label>Type</mat-label>
+                                <mat-select [(ngModel)]="newTagTypeInput"
+                                    (selectionChange)="onTagTypeChange($event.value)"
+                                    [ngModelOptions]="{standalone: true}">
+                                    <mat-option value="face">Face</mat-option>
+                                    <mat-option value="hair">Hair</mat-option>
+                                    <mat-option value="body">Body</mat-option>
+                                    <mat-option value="mind">Mind</mat-option>
+                                    <mat-option value="perfume">Perfume</mat-option>
+                                    <mat-option value="general">General</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" style="min-width: 250px;">
+                                <mat-label>Select Tag</mat-label>
+                                <mat-select [(ngModel)]="newTagInput" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Select Tag">
+                                    <mat-option *ngIf="availableTags.length === 0" disabled>No tags found</mat-option>
+                                    <mat-option *ngFor="let t of availableTags" [value]="t.name">
+                                        {{ formatTagName(t.name) }}
+                                    </mat-option>
+                                </mat-select>
+                                <button mat-icon-button matSuffix (click)="addTag(newTagInput, newTagTypeInput)"
+                                    [disabled]="!newTagInput">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </mat-form-field>
+
+                            <span class="spacer" style="flex: 1;"></span>
+
+                            <button mat-flat-button color="primary" (click)="saveTags()"
+                                style="white-space: nowrap; flex-shrink: 0; margin-top: 8px; padding: 8px 24px;">
+                                <mat-icon>save</mat-icon> Save Tags Only
+                            </button>
+                        </div>
+
+                        <!-- Current Tags -->
+                        <h3 style="margin-bottom: 8px;">Concern Tags</h3>
+                        <mat-chip-grid #chipGrid>
+                            <mat-chip-row *ngFor="let tag of concernTags" (removed)="removeTag(tag)">
+                                {{ formatTagName(tag.name) }}
+                                <button matChipRemove>
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </mat-chip-row>
+                            <span *ngIf="concernTags.length === 0" style="color: #999; font-style: italic;">No concern
+                                tags assigned.</span>
+                        </mat-chip-grid>
+
+                        <!-- Skin Types -->
+                        <h3 style="margin-top: 2rem; margin-bottom: 8px;">Skin Types</h3>
+                        <p class="section-desc" style="margin-bottom: 1rem; font-size: 0.9em; color: #666;">
+                            Select applicable skin types for better recommendations.
+                        </p>
+                        <mat-chip-listbox multiple class="skin-types-list">
+                            <mat-chip-option *ngFor="let skinType of availableSkinTypes"
+                                [selected]="isSkinTypeSelected(skinType.name)" (click)="toggleSkinType(skinType)"
+                                color="primary" class="custom-skin-chip">
+                                {{ formatTagName(skinType.name) }}
+                            </mat-chip-option>
+                            <span *ngIf="availableSkinTypes.length === 0"
+                                style="color: #999; font-style: italic;">Loading skin types...</span>
+                        </mat-chip-listbox>
+
+                    </div>
+                </mat-tab>
+
                 <!-- TAB 5: IMAGES -->
                 <mat-tab label="Images">
                     <div class="tab-content" formArrayName="images">
@@ -153,20 +230,25 @@
                                     <input matInput [formControlName]="i" placeholder="https://...">
                                 </mat-form-field>
                                 <div class="preview">
-                                    <img [src]="control.value" (error)="onImgError($event)" *ngIf="control.value">
+                                    <img [src]="getImageUrl(control.value)" (error)="onImgError($event)"
+                                        *ngIf="control.value">
                                 </div>
                                 <button mat-icon-button color="warn"
                                     (click)="removeImage(i)"><mat-icon>delete</mat-icon></button>
                             </div>
                         </div>
 
-                        <button mat-stroked-button class="add-btn" (click)="addImage()">
-                            <mat-icon>add_photo_alternate</mat-icon> Add Image URL
-                        </button>
+                        <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                            <button mat-stroked-button class="add-btn" (click)="addImage()" type="button">
+                                <mat-icon>add_link</mat-icon> Add Image URL
+                            </button>
 
-                        <div class="upload-placeholder">
-                            <mat-icon>cloud_upload</mat-icon>
-                            <span>File Upload Coming Soon</span>
+                            <button mat-flat-button color="primary" class="add-btn" type="button"
+                                (click)="fileInput.click()" [disabled]="isLoading">
+                                <mat-icon>cloud_upload</mat-icon> Upload File
+                            </button>
+                            <input type="file" #fileInput (change)="onFileSelected($event)"
+                                accept="image/jpeg, image/png, image/webp" style="display: none;">
                         </div>
                     </div>
                 </mat-tab>

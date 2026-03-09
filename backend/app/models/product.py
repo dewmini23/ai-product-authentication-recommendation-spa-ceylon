@@ -33,3 +33,8 @@ class Product(Base):
 
     category = relationship("Category", back_populates="products")
     images = relationship("ProductImage", back_populates="product", cascade="all, delete-orphan")
+    
+    # New relationship for tags (Many-to-Many via product_tags association table)
+    # Using string "product_tags" - requires Tag and ProductTag to be imported before mapper is finalized
+    tags = relationship("Tag", secondary="product_tags", lazy="select")
+

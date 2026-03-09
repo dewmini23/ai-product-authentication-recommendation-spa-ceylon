@@ -314,6 +314,133 @@ $border-color: #2c3830;
     }
 }
 
+// Skin Types Chips
+::ng-deep {
+
+    mat-chip-row.mat-mdc-chip,
+    mat-chip-row.mdc-evolution-chip {
+        --mdc-chip-elevated-container-color: rgba(255, 255, 255, 0.03);
+        --mdc-chip-container-color: rgba(255, 255, 255, 0.03);
+        --mdc-chip-label-text-color: #e0e0e0;
+        --mdc-chip-disabled-container-color: rgba(255, 255, 255, 0.03);
+
+        background-color: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 8px !important;
+        transition: all 0.2s ease;
+
+        .mdc-evolution-chip__action--primary,
+        .mdc-evolution-chip__action--trailing,
+        .mdc-evolution-chip__action--presentational {
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+
+        .mdc-evolution-chip__action--primary::before {
+            display: none !important;
+        }
+
+        .mdc-evolution-chip__ripple {
+            display: none !important;
+        }
+
+        .mdc-evolution-chip__text-label {
+            color: $text-light !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.85rem !important;
+        }
+
+        .mat-mdc-chip-remove {
+            color: rgba(255, 255, 255, 0.4) !important;
+            opacity: 1 !important;
+
+            &:hover {
+                color: #ef4444 !important;
+            }
+        }
+
+        &:hover {
+            --mdc-chip-elevated-container-color: rgba(255, 255, 255, 0.07);
+            --mdc-chip-container-color: rgba(255, 255, 255, 0.07);
+            background-color: rgba(255, 255, 255, 0.07) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+    }
+}
+
+.skin-types-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+
+    ::ng-deep .custom-skin-chip.mat-mdc-chip,
+    ::ng-deep .custom-skin-chip.mdc-evolution-chip {
+        --mdc-chip-elevated-container-color: #1a201b;
+        --mdc-chip-container-color: #1a201b;
+        --mdc-chip-label-text-color: #c6a87c;
+
+        border-radius: 20px !important;
+        border: 1px solid rgba(198, 168, 124, 0.4) !important;
+        background-color: #1a201b !important;
+        background: #1a201b !important;
+        padding: 4px 12px !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer;
+
+        .mdc-evolution-chip__action--primary,
+        .mdc-evolution-chip__action--presentational {
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+
+        .mdc-evolution-chip__action--primary::before {
+            display: none !important;
+        }
+
+        .mdc-evolution-chip__ripple {
+            display: none !important;
+        }
+
+        .mdc-evolution-chip__text-label {
+            color: $primary-gold !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.9rem !important;
+            font-weight: 500 !important;
+            transition: color 0.2s ease !important;
+        }
+
+        &:hover {
+            --mdc-chip-container-color: rgba(198, 168, 124, 0.1);
+            --mdc-chip-elevated-container-color: rgba(198, 168, 124, 0.1);
+            background-color: rgba(198, 168, 124, 0.1) !important;
+            border-color: $primary-gold !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(198, 168, 124, 0.15) !important;
+        }
+
+        &.mdc-evolution-chip--selected {
+            --mdc-chip-container-color: #c6a87c;
+            --mdc-chip-elevated-container-color: #c6a87c;
+            background-color: $primary-gold !important;
+            background: $primary-gold !important;
+            border-color: $primary-gold !important;
+            box-shadow: 0 4px 15px rgba(198, 168, 124, 0.3) !important;
+
+            .mdc-evolution-chip__text-label {
+                color: #0a0e0b !important;
+                font-weight: 600 !important;
+            }
+
+            &:hover {
+                --mdc-chip-container-color: #d1b78f;
+                --mdc-chip-elevated-container-color: #d1b78f;
+                background-color: #d1b78f !important;
+                transform: translateY(-2px);
+            }
+        }
+    }
+}
 
 // Checklist Mini
 .checklist-mini {

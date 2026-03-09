@@ -1,14 +1,68 @@
+# ==========================================
+# 🚀 Full-Stack AI Project .gitignore
+# ==========================================
+
+# ── Dependencies ──────────────────────────
 node_modules/
+backend/.venv/
+backend/venv/
+backend/env/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+
+# ── Build & Dist ──────────────────────────
 dist/
+build/
 .angular/
+.next/
+out/
+coverage/
+
+# ── Local Environments & Secrets ──────────
 .env
-.DS_Store
+.env.*
+*.env
+*.pem
+secrets/
+backend/secrets/
 
-# Archives / exports
-*.rar
+# ── Machine Learning Models & Weights ─────
+*.pt
+*.pth
+*.onnx
+*.bin
+*.h5
+*.hdf5
+*.savedmodel
+ml_models/
+models/
+
+# ── Databases & Local State ───────────────
+*.db
+*.sqlite
+*.sqlite3
+backend/app/data/*.db
+backend/app/data/*.sqlite3
+
+# ── Archives & Deliverables ───────────────
 *.zip
+*.rar
 *.tar.gz
-
-# Deliverables (if present)
+*.7z
 deliverables/
 
+# ── OS & IDE Files ────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Logs & Caches ─────────────────────────
+*.log
+logs/
+temp/
+tmp/

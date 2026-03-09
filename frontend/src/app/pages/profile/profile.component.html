@@ -1,0 +1,51 @@
+<app-navbar></app-navbar>
+<main class="profile-page-container">
+    <div class="profile-card-wrapper">
+        <div class="profile-card">
+            <h1 class="card-title">My Profile</h1>
+
+            <div *ngIf="loading" class="loading-state">
+                <p>Loading profile...</p>
+            </div>
+
+            <div *ngIf="error" class="error-state">
+                <p>{{ error }}</p>
+            </div>
+
+            <div *ngIf="user && !loading" class="user-details">
+                <div class="avatar-circle">
+                    {{ avatarInitial | uppercase }}
+                </div>
+
+                <h2 class="user-name">{{ user.full_name }}</h2>
+                <div class="role-badge" *ngIf="user.role === 'ADMIN'">Administrator</div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">{{ user.email }}</span>
+                    </div>
+                    <div class="info-item" *ngIf="user.skin_type">
+                        <span class="info-label">Skin Type</span>
+                        <span class="info-value">{{ user.skin_type }}</span>
+                    </div>
+                    <div class="info-item" *ngIf="user.age">
+                        <span class="info-label">Age</span>
+                        <span class="info-value">{{ user.age }}</span>
+                    </div>
+                    <div class="info-item" *ngIf="user.gender">
+                        <span class="info-label">Gender</span>
+                        <span class="info-value">{{ user.gender | titlecase }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Account Created</span>
+                        <span class="info-value">{{ user.created_at | date:'mediumDate' }}</span>
+                    </div>
+                </div>
+
+                <button class="btn-logout" (click)="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+</main>
+<app-footer></app-footer>

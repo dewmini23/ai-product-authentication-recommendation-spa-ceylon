@@ -45,6 +45,7 @@ class ProductUpdate(BaseModel):
     is_festive: Optional[bool] = None
     for_men: Optional[bool] = None
     ingredient_highlights: Optional[List[IngredientHighlight]] = None
+    images: Optional[List[ProductImageCreate]] = None
 
 class Product(ProductBase):
     id: int

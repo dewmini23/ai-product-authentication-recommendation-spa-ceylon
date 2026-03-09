@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { ProductAdminService } from '../../services/product-admin.service';
 import { AdminCategoryService } from '../../services/admin-category.service';
 import { AdminProduct } from '../../models/admin-product.model';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-product-management',
@@ -29,16 +32,14 @@ export class ProductManagementComponent implements OnInit, OnDestroy {
     showTrendingOnly = false;
     categories: { id: number; name: string }[] = [];
 
-    // Modal
-    isModalOpen = false;
-    editingProduct: AdminProduct | null = null;
-
     isLoading = true;
 
     constructor(
         private productService: ProductAdminService,
         private categoryService: AdminCategoryService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private http: HttpClient,
+        private router: Router // Inject Router
     ) { }
 
     ngOnInit(): void {
@@ -121,27 +122,25 @@ export class ProductManagementComponent implements OnInit, OnDestroy {
         this.filteredProducts = temp;
     }
 
-    // Modal Actions
+    // --- Filters ---
+    onCategoryChange(event: any) {
+        this.selectedCategory = event.target.value;
+        this.applyFilters();
+    }
+
+    onTrendingChange(event: any) {
+        this.showTrendingOnly = event.target.checked;
+        this.applyFilters();
+    }
+
+    // --- Add Product Routing ---
     openAddModal() {
-        this.editingProduct = null;
-        this.isModalOpen = true;
+        // We route to the new dedicated Create page now!
+        this.router.navigate(['/admin/products/new']);
     }
 
-    closeModal() {
-        this.isModalOpen = false;
-        this.editingProduct = null;
-        // Optionally reload if we stayed on page, but we usually navigate away on create.
-        // If we just cancelled, no reload needed.
-    }
-
-    saveProduct(product: AdminProduct) {
-        // Legacy: The modal now handles creation and navigation directly.
-        // This is kept only if we ever re-enable edit-in-modal.
-        if (product.id === 0) {
-            this.productService.createProduct(product as any).subscribe(() => {
-                this.loadProducts();
-            });
-        }
+    editProduct(id: number) {
+        this.router.navigate(['/admin/products', id, 'edit']);
     }
 
     deleteProduct(id: number) {
@@ -222,5 +221,30 @@ export class ProductManagementComponent implements OnInit, OnDestroy {
         URL.revokeObjectURL(url);
 
         this.snackBar.open(`Exported ${this.filteredProducts.length} products`, 'Close', { duration: 3000 });
+    }
+
+    runMigration() {
+        if (confirm('Run Base64 Image Migration on Database?')) {
+            this.isLoading = true;
+            this.http.post<any>(`${environment.apiBaseUrl}/api/products/images/migrate-base64`, {}).subscribe({
+                next: (res) => {
+                    this.isLoading = false;
+                    const errCount = res.errors ? res.errors.length : 0;
+                    this.snackBar.open(
+                        `Migration Complete! Migrated: ${res.migrated}, Skipped: ${res.skipped}, Errors: ${errCount}`,
+                        'Close',
+                        { duration: 6000 }
+                    );
+                    if (res.migrated > 0) {
+                        this.loadProducts();
+                    }
+                },
+                error: (err) => {
+                    this.isLoading = false;
+                    console.error('Migration failed', err);
+                    this.snackBar.open('Migration Failed. Check console.', 'Close', { duration: 4000 });
+                }
+            });
+        }
     }
 }

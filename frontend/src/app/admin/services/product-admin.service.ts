@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ProductCreateRequest, ProductResponse } from '../models/product-api.model';
 
@@ -21,7 +21,9 @@ export class ProductAdminService {
     }
 
     getProduct(id: number): Observable<ProductResponse> {
-        return this.http.get<ProductResponse>(`${this.apiUrl}/${id}`);
+        return this.http.get<ProductResponse>(`${this.apiUrl}/${id}`).pipe(
+            map(p => this.mapImageUrl(p))
+        );
     }
 
     listProducts(params?: {
@@ -47,7 +49,9 @@ export class ProductAdminService {
             });
         }
 
-        return this.http.get<ProductResponse[]>(this.apiUrl, { params: httpParams });
+        return this.http.get<ProductResponse[]>(this.apiUrl, { params: httpParams }).pipe(
+            map(products => products.map(p => this.mapImageUrl(p)))
+        );
     }
 
     deleteProduct(id: number): Observable<{ message: string }> {
@@ -67,5 +71,23 @@ export class ProductAdminService {
     publishProduct(id: number, payload: any): Observable<ProductResponse> {
         // Publish is just an update operation
         return this.updateProduct(id, payload);
+    }
+
+    private mapImageUrl<T extends { primary_image_url?: string; images?: any[] }>(product: T): T {
+        const cloned = { ...product };
+        if (cloned.primary_image_url && cloned.primary_image_url.startsWith('/uploads/')) {
+            cloned.primary_image_url = environment.apiBaseUrl + cloned.primary_image_url;
+        }
+        if (cloned.images && Array.isArray(cloned.images)) {
+            cloned.images = cloned.images.map(img => {
+                if (typeof img === 'string' && img.startsWith('/uploads/')) {
+                    return environment.apiBaseUrl + img;
+                } else if (img && img.image_url && img.image_url.startsWith('/uploads/')) {
+                    return { ...img, image_url: environment.apiBaseUrl + img.image_url };
+                }
+                return img;
+            });
+        }
+        return cloned;
     }
 }
