@@ -180,6 +180,65 @@ def verify_product_image(image_bytes: bytes) -> AuthVerifyResponse:
 
     reasons.extend(score_reasons)
 
+    # ── Step 5: Visual Classifier Refinement (Optional) ───────────────────────
+    from app.services.visual_auth_classifier import visual_auth_classifier
+    import io
+    from PIL import Image
+    
+    debug_info["visual_classifier_used"] = False
+    debug_info["visual_fake_probs"] = {}
+    debug_info["visual_p_fake"] = -1.0
+
+    if visual_auth_classifier.is_available or visual_auth_classifier._load():
+        try:
+            pil_image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+            img_w, img_h = pil_image.size
+            valid_probs = []
+
+            # helper to crop securely
+            def get_crop(box_dict):
+                x, y, w, h = box_dict["x"], box_dict["y"], box_dict["w"], box_dict["h"]
+                # apply minor padding to ensure context is captured matching the training data
+                pad_w, pad_h = int(w * 0.05), int(h * 0.05)
+                x1 = max(0, x - pad_w)
+                y1 = max(0, y - pad_h)
+                x2 = min(img_w, x + w + pad_w)
+                y2 = min(img_h, y + h + pad_h)
+                if x2 > x1 and y2 > y1:
+                    return pil_image.crop((x1, y1, x2, y2))
+                return None
+
+            regions = {"product_pack": pack, "front_label": label, "brand_block": brand}
+            
+            for region_name, det in regions.items():
+                if det and "box" in det:
+                    crop_img = get_crop(det["box"])
+                    if crop_img:
+                        prob = visual_auth_classifier.predict_fake_probability(crop_img)
+                        if prob >= 0.0:
+                            debug_info["visual_fake_probs"][region_name] = round(prob, 4)
+                            valid_probs.append(prob)
+
+            if valid_probs:
+                p_fake = max(valid_probs)
+                debug_info["visual_p_fake"] = round(p_fake, 4)
+                debug_info["visual_classifier_used"] = True
+                
+                logger.info(f"[AuthService] Visual classifier p_fake: {p_fake:.4f} (from {debug_info['visual_fake_probs']})")
+
+                # Refinement Logic
+                if p_fake >= 0.85 and status != "verified":
+                    if status != "suspected_counterfeit":
+                        logger.warning(f"[AuthService] Refined status down to suspected_counterfeit (p_fake={p_fake:.2f})")
+                        reasons.append(f"Visual analysis strongly indicates a counterfeit pattern ({p_fake*100:.1f}% confidence).")
+                        status = "suspected_counterfeit"
+                elif p_fake >= 0.90 and status == "verified":
+                    logger.warning(f"[AuthService] Refined status down to unable_to_verify (p_fake={p_fake:.2f})")
+                    reasons.append(f"Text matches references, but visual analysis detected suspicious features ({p_fake*100:.1f}% confidence).")
+                    status = "unable_to_verify"
+        except Exception as e:
+            logger.error(f"[AuthService] Error during visual refinement: {e}", exc_info=True)
+
     debug_info["yolo_pack_conf"] = pack["confidence"]
     debug_info["yolo_label_conf"] = label["confidence"]
     debug_info["yolo_brand_conf"] = brand["confidence"]

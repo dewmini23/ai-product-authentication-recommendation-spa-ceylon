@@ -38,10 +38,7 @@ class YoloAuthDetector:
         return cls._instance
 
     def configure(self, model_path: Optional[str] = None) -> None:
-        """
-        (Optional) Call once at startup to set a custom model path.
-        Falls back to YOLO_AUTH_MODEL_PATH env variable, then default.
-        """
+        
         env_path = os.environ.get("YOLO_AUTH_MODEL_PATH")
         if model_path:
             self._model_path = Path(model_path)
@@ -50,11 +47,7 @@ class YoloAuthDetector:
         # else: keep _DEFAULT_MODEL_PATH
 
     def _maybe_reset_for_retry(self) -> None:
-        """
-        If the previous failure was 'file_missing' AND the file now exists,
-        reset load state to allow a fresh attempt.
-        Called only when a cached failure is present — no I/O on every request.
-        """
+        
         if (
             self._load_attempted
             and self._load_failed
